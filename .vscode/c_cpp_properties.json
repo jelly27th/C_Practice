@@ -2,11 +2,7 @@
   "configurations": [
     {
       "name": "Win32",
-      "includePath": [
-        "${workspaceFolder}/**"
-        // " G:\\mysql-8.0.27-winx64\\include" ,         //头文件
-        // " G:\\mysql-8.0.27-winx64\\lib"              //库文件
-      ],
+      "includePath": ["${workspaceFolder}/**"],
       "defines": ["_DEBUG", "UNICODE", "_UNICODE"],
       "compilerPath": "C:/mingw64/bin/gcc.exe",
       "cStandard": "gnu17",
