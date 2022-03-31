@@ -30,8 +30,7 @@ int main(int argc, char **argv)
 //打印链表
 void PrintNode(List head)
 {
-    List pos = malloc(sizeof(struct Node));
-    pos = head;
+    List pos = head;
     while(pos != NULL)
     {
         printf("%d\n",pos->num);

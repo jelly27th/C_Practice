@@ -45,9 +45,8 @@ int main(int argc, char** argv)
 //找到相应位置的节点
 int FindNode(int pos, List head)
 {
-    List point = malloc(sizeof(struct Node));
     int count = 1;
-    point = head;
+    List point = head;
     while (point != NULL)
     {
         if (count == pos)
@@ -59,15 +58,13 @@ int FindNode(int pos, List head)
         point = point->next;
         count++;
     }
-    free(point);
     return -1;
 }
 //打印链表并返回数组
 void PrintNode(List head, int* arr)
 {
-    List pos = malloc(sizeof(struct Node));
     int i = 0;
-    pos = head;
+    List pos = head;
     while (pos != NULL)
     {
         arr[i++] = pos->num;
