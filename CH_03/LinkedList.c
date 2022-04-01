@@ -36,7 +36,6 @@ void PrintNode(List head)
         printf("%d\n",pos->num);
         pos = pos->next;
     }
-    free(pos);
 }
 //创建节点
 List CreateNode(int element,Position head,List L)

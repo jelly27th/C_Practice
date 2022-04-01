@@ -130,6 +130,7 @@ List FindPreviousNode(List L,List head)
             return temp;
         temp = temp->next;
     }
+    return NULL;
 }
 //打印链表
 void PrintNode(List head)
@@ -140,7 +141,6 @@ void PrintNode(List head)
         printf("%d\n",pos->num);
         pos = pos->next;
     }
-    free(pos);
 }
 /***** 单链表****/
 
@@ -260,5 +260,6 @@ DoubleList SwapDoubleNode(DoubleList pos,DoubleList start)
 
         return start;
     }
+    return NULL;
 }
 /***** 双链表****/
