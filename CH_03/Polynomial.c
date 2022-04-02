@@ -20,6 +20,8 @@ void Copy(Position head, Polynomial y);
 Polynomial FindPrevious(Polynomial L, Polynomial head);
 Polynomial Insert(Polynomial head, Polynomial Node);
 void Addition(Polynomial head1, Polynomial head2);
+void Multiply(Polynomial head1, Polynomial head2);
+int IsLast(Polynomial pos);
 
 
 int main(int argc, char** argv)
@@ -35,10 +37,11 @@ int main(int argc, char** argv)
     for (int i = 0; i < 4; i++) {
         y2 = CreateNode(&head2, y2);
     }
-    Addition(head1,head2);
+    // Addition(head1,head2);
+    Multiply(head1,head2);
 
-    Delete(y1);
-    Delete(y2);
+    Delete(head1);
+    Delete(head2);
     return 0;
 }
 
@@ -205,9 +208,22 @@ Polynomial Insert(Polynomial head, Polynomial Node)
                 prev->next = temp;
                 return head;
             }
+            if(IsLast(pos)){//指数最小时添置末尾
+                Polynomial temp = malloc(sizeof(struct Node));
+                temp->Coefficient = Node->Coefficient;
+                temp->Exponent = Node->Exponent;
+                temp->next = NULL;
+                pos->next = temp;
+                return head;
+            }
             pos = pos->next;
         }
     }
+}
+/***检查是否是链表末尾***/
+int IsLast(Polynomial pos)
+{
+    return pos->next==NULL;
 }
 /***多项式相加***/
 void Addition(Polynomial head1, Polynomial head2)
@@ -215,7 +231,7 @@ void Addition(Polynomial head1, Polynomial head2)
     Polynomial y1, y2, y;
     y = NULL;
     y1 = head1; y2 = head2;
-    Copy(&y, y1);
+    Copy(&y, y1);//复制一个链表
     while (y2 != NULL)
     {
         y1 = y;
@@ -224,7 +240,7 @@ void Addition(Polynomial head1, Polynomial head2)
         if (y1 == NULL){//没有相同元素插入
             y = Insert(y, y2);
         }
-        else {//有系数相加
+        else {//有则系数相加
             y1->Coefficient = y1->Coefficient + y2->Coefficient;
         }
         y2 = y2->next;
@@ -232,3 +248,55 @@ void Addition(Polynomial head1, Polynomial head2)
     PrintNode(y);
     Delete(y);
 }
+/***多项式相乘***/
+void Multiply(Polynomial head1, Polynomial head2)
+{
+    Polynomial y1, y2, y,head;
+    head = y = NULL;
+    y1 = head1;
+    y2 = head2;
+    while(y1!= NULL)//先得到一个链表
+    {
+        Polynomial temp = malloc(sizeof(struct Node));
+        temp->Coefficient = y1->Coefficient*y2->Coefficient;
+        temp->Exponent  = y1->Exponent+y2->Exponent;
+        temp->next = NULL;
+        if(y==NULL){
+            y = head = temp;
+        }
+        else{
+            y->next = temp;
+            y = temp;
+        }
+        y1 = y1->next;
+    }
+    y2 = y2->next;//从第二个节点开始
+
+    while(y2 != NULL)
+    {
+        y1 = head1;
+        while(y1 != NULL)
+        {
+            Polynomial temp = malloc(sizeof(struct Node));
+            temp->Coefficient = y1->Coefficient*y2->Coefficient;
+            temp->Exponent  = y1->Exponent+y2->Exponent;
+            temp->next = NULL;
+            //比较
+            y = head;
+            while(y!= NULL&& y->Exponent!=temp->Exponent)
+                y = y->next;
+            if(y==NULL){
+                head = Insert(head,temp);
+            }
+            else{
+                y->Coefficient = y->Coefficient+temp->Exponent;
+                free(temp);
+            }
+            y1 = y1->next;
+        }
+        y2 = y2->next;
+    }
+    PrintNode(head);
+    Delete(head);
+}
+/***时间复杂度为O(M2N)***/
