@@ -24,6 +24,7 @@ Polynomial Multiply(Polynomial head1, Polynomial head2);
 int IsLast(Polynomial pos);
 Polynomial Pow(Polynomial FX, unsigned int N);
 int IsEven(int N);
+Polynomial QuickPow(Polynomial FX, unsigned int N);
 
 int main(int argc, char** argv)
 {
@@ -51,10 +52,16 @@ int main(int argc, char** argv)
     /***多项式相乘***/ 
 
     /***多项式求幂***/ 
-    Polynomial power = Pow(head1,2);
+    // Polynomial power = Pow(head1,2);
+    // PrintNode(power);
+    // Delete(power);
+    /***多项式求幂***/
+
+    /***多项式快速求幂***/
+    Polynomial power = QuickPow(head1,2);
     PrintNode(power);
-    Delete(power);
-    /***多项式求幂***/  
+    Delete(power);  
+    /***多项式快速求幂***/
     Delete(head1);
     // Delete(head2);
     return 0;
@@ -236,6 +243,7 @@ Polynomial Insert(Polynomial head, Polynomial Node)
             pos = pos->next;
         }
     }
+    return head;
 }
 /***检查是否是链表末尾***/
 int IsLast(Polynomial pos)
@@ -334,4 +342,23 @@ Polynomial Pow(Polynomial FX, unsigned int N)
     else{
         return Multiply(Pow(Multiply(FX,FX),N/2),FX);
     }
+}
+//快速取幂非递归版
+Polynomial QuickPow(Polynomial FX, unsigned int N)
+{ 
+    Polynomial result = malloc(sizeof(struct Node));
+    result->Coefficient =1;
+    result->Exponent = 0;
+    result->next = NULL;
+    while (N)
+    {
+    
+        if (N & 1)        //  等价于判断n的末位是不是1
+            result = Multiply(result,FX);
+            // result *= x;
+        N >>= 1;          // 将n右移一位，即遍历原n的二进制的每一位
+        // x *= x;  // n右移了一位，x补上
+        FX = Multiply(FX,FX);
+    }
+    return result;
 }
