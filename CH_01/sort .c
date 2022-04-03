@@ -33,7 +33,7 @@ void sort(int arr[], int length)
         printf("%d\n", arr[((length + 1) / 2) - 1]);
 }
 
-// 直接插入排序
+// 直接插入排序 时间复杂度O(N2)
 void insertsort(int *arr, int length)
 {
     for (int i = 0; i < length; i++)
@@ -57,7 +57,7 @@ void insertsort(int *arr, int length)
         printf("%d\n", arr[((length + 1) / 2) - 1]);
 }
 
-//希尔排序
+//希尔排序 时间复杂度O(NlogN)
 void shellsort(int *arr,int length)
 {
     int gap = length/2;
@@ -98,7 +98,7 @@ void shellsort(int *arr,int length)
         printf("%d\n", arr[((length + 1) / 2) - 1]);
 }
 
-// 选择排序
+// 选择排序 时间复杂度O(N2)
 void selectsort(int *arr, int length)
 {
     for(int i = 0;i<length;i++)
@@ -122,7 +122,7 @@ void selectsort(int *arr, int length)
         printf("%d\n", arr[((length + 1) / 2) - 1]);
 }
 
-// 冒泡排序
+// 冒泡排序 时间复杂度O(N2)
 void bubblesort(int *arr, int length)
 {
     for (int i = length -1; i >= 0; i--)

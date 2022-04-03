@@ -16,13 +16,14 @@ void PrintNode(Polynomial head);
 int Length(Polynomial head);
 Polynomial zeroPolynomial(Position head, int length);
 int Union(Polynomial head1, Polynomial head2);
-void Copy(Position head, Polynomial y);
+Polynomial Copy(Polynomial y);
 Polynomial FindPrevious(Polynomial L, Polynomial head);
 Polynomial Insert(Polynomial head, Polynomial Node);
-void Addition(Polynomial head1, Polynomial head2);
-void Multiply(Polynomial head1, Polynomial head2);
+Polynomial Addition(Polynomial head1, Polynomial head2);
+Polynomial Multiply(Polynomial head1, Polynomial head2);
 int IsLast(Polynomial pos);
-
+Polynomial Pow(Polynomial FX, unsigned int N);
+int IsEven(int N);
 
 int main(int argc, char** argv)
 {
@@ -32,16 +33,30 @@ int main(int argc, char** argv)
         y1 = CreateNode(&head1, y1);
     }
 
-    Polynomial y2 = malloc(sizeof(struct Node));
-    Polynomial head2 = NULL;
-    for (int i = 0; i < 4; i++) {
-        y2 = CreateNode(&head2, y2);
-    }
-    // Addition(head1,head2);
-    Multiply(head1,head2);
+    // Polynomial y2 = malloc(sizeof(struct Node));
+    // Polynomial head2 = NULL;
+    // for (int i = 0; i < 4; i++) {
+    //     y2 = CreateNode(&head2, y2);
+    // }
+    /***多项式相加***/
+    // Polynomial y = Addition(head1,head2);
+    // PrintNode(y);
+    // Delete(y);
+    /***多项式相加***/  
 
+    /***多项式相乘***/  
+    // Polynomial head = Multiply(head1,head2);
+    // PrintNode(head);
+    // Delete(head);
+    /***多项式相乘***/ 
+
+    /***多项式求幂***/ 
+    Polynomial power = Pow(head1,2);
+    PrintNode(power);
+    Delete(power);
+    /***多项式求幂***/  
     Delete(head1);
-    Delete(head2);
+    // Delete(head2);
     return 0;
 }
 
@@ -147,20 +162,21 @@ int Union(Polynomial head1, Polynomial head2)
     return Length;
 }
 /***复制链表***/
-void Copy(Position head, Polynomial y)
+Polynomial Copy(Polynomial y)
 {
     int Len = Length(y);
     Polynomial y1 = y;
     Polynomial L = NULL;
+    Polynomial head = NULL;
     for (int i = 0; i < Len; i++)
     {
         Polynomial temp = malloc(sizeof(struct Node));
         temp->Coefficient = y1->Coefficient;
         temp->Exponent = y1->Exponent;
         temp->next = NULL;
-        if (*head == NULL)
+        if (head == NULL)
         {
-            *head = L = temp;
+            head = L = temp;
         }
         else
         {
@@ -169,6 +185,7 @@ void Copy(Position head, Polynomial y)
         }
         y1 = y1->next;
     }
+    return head;
 }
 //找上一个节点
 Polynomial FindPrevious(Polynomial L, Polynomial head)
@@ -226,12 +243,11 @@ int IsLast(Polynomial pos)
     return pos->next==NULL;
 }
 /***多项式相加***/
-void Addition(Polynomial head1, Polynomial head2)
+Polynomial Addition(Polynomial head1, Polynomial head2)
 {
-    Polynomial y1, y2, y;
-    y = NULL;
+    Polynomial y1, y2;
     y1 = head1; y2 = head2;
-    Copy(&y, y1);//复制一个链表
+    Polynomial y = Copy(y1);//复制一个链表
     while (y2 != NULL)
     {
         y1 = y;
@@ -245,11 +261,10 @@ void Addition(Polynomial head1, Polynomial head2)
         }
         y2 = y2->next;
     }
-    PrintNode(y);
-    Delete(y);
+    return y;
 }
 /***多项式相乘***/
-void Multiply(Polynomial head1, Polynomial head2)
+Polynomial Multiply(Polynomial head1, Polynomial head2)
 {
     Polynomial y1, y2, y,head;
     head = y = NULL;
@@ -287,16 +302,36 @@ void Multiply(Polynomial head1, Polynomial head2)
                 y = y->next;
             if(y==NULL){
                 head = Insert(head,temp);
+                free(temp);
             }
             else{
-                y->Coefficient = y->Coefficient+temp->Exponent;
+                y->Coefficient = y->Coefficient+temp->Coefficient;
                 free(temp);
             }
             y1 = y1->next;
         }
         y2 = y2->next;
     }
-    PrintNode(head);
-    Delete(head);
+    return head;
 }
 /***时间复杂度为O(M2N)***/
+
+/***判断是否是偶数***/
+int IsEven(int N)
+{
+    return N%2==0;
+}
+/***多项式取幂***/
+Polynomial Pow(Polynomial FX, unsigned int N)
+{
+    if(N==0)
+      return 1;
+    if(N==1)
+      return FX;
+    if(IsEven(N)){
+        return Pow(Multiply(FX, FX),N/2);
+    }
+    else{
+        return Multiply(Pow(Multiply(FX,FX),N/2),FX);
+    }
+}
