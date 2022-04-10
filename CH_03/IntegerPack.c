@@ -25,6 +25,7 @@ void BigIntegerStorage(Position head, Position L);
 Judge BigIntegerCompare(List head1,List head2);
 List BigIntegerAdd(List rear1,List rear2);
 List BigIntegerSubtract(List rear1,List rear2);
+List BigIntegerMultiply(List rear1,List rear2);
 
 int main(int argc, char** argv)
 {
@@ -36,7 +37,8 @@ int main(int argc, char** argv)
 	BigIntegerStorage(&P_head,&P);
     // printf("%d\n",BigIntegerCompare(L_head,P_head));
 	// List head = BigIntegerAdd(L, P);
-	List head = BigIntegerSubtract(L, P);
+	// List head = BigIntegerSubtract(L, P);
+	List head = BigIntegerMultiply(L, P);
 	PrintNode(head);
 	PrintNode(L_head);
 	PrintNode(P_head);
@@ -281,4 +283,133 @@ List BigIntegerSubtract(List rear1,List rear2)
 	return head;
 }
 // 大整数乘法
+List BigIntegerMultiply(List rear1,List rear2)
+{
+	List L1 = NULL, L2 = NULL;
+	List head = NULL,rear = NULL;
+	if(BigIntegerCompare(rear1,rear2)==MORE||BigIntegerCompare(rear1,rear2)==EQUAL){
+		L1 = rear2;
+		L2 = rear1;
+	}
+	else if(BigIntegerCompare(rear1,rear2)==LESS){
+		L1 = rear1;
+		L2 = rear2;
+	}
+	List ret = L2;
+/**先得到一个链表 START**/
+	int carry = 0;
+	while(ret != NULL)
+	{
+		List temp = malloc(sizeof(struct Node));
+		temp->num = L1->num*ret->num+carry;
+		temp->next = NULL;
+		temp->prev = NULL;
+		carry = 0;
+		if(temp->num>=10)
+		{
+			carry = temp->num/10;
+			temp->num = temp->num%10;
+		}
+		if(head == NULL)
+		{
+			rear = head = temp;
+		}
+		else{//头插法
+			head->prev  = temp;
+			temp->next = head;
+			head = temp;
+		}
+		ret = ret->prev;
+	}
+	if(carry!=0)
+	{
+		List temp = malloc(sizeof(struct Node));
+		temp->num = carry;
+		temp->next = NULL;
+		temp->prev = NULL;
+
+		head->prev  = temp;
+		temp->next = head;
+		head = temp;
+	}
+/**先得到一个链表 END**/
+	L1 = L1->prev;
+	while(L1 != NULL)
+	{
+		/**再得到另外一个链表 START****/
+		carry = 0;
+		List head1 = NULL,rear3 = NULL;
+		ret = L2;
+		while(ret != NULL)
+		{
+			List temp = malloc(sizeof(struct Node));
+			temp->num = L1->num*ret->num+carry;
+			temp->prev = NULL;
+			temp->next = NULL;
+			carry = 0;
+			if(temp->num>=10)
+			{
+				carry = temp->num/10;
+				temp->num = temp->num%10;
+			}
+			if(head1 == NULL)
+			{
+				rear3 = head1 = temp;
+			}
+			else{//头插法
+				head1->prev  = temp;
+				temp->next = head1;
+				head1 = temp;
+			}
+			ret = ret->prev;
+		}
+		if(carry!=0)
+		{
+			List temp = malloc(sizeof(struct Node));
+			temp->num = carry;
+			temp->next = NULL;
+			temp->prev = NULL;
+
+			head1->prev  = temp;
+			temp->next = head1;
+			head1 = temp;
+		}
+		/**再得到另外一个链表 END****/
+		/**两链表相加 START **/
+		List pos = rear->prev;
+		carry = 0;
+		while(rear3 != NULL)
+		{
+			if(pos!= NULL)
+			{
+				pos->num = pos->num + rear3->num + carry;
+				carry = 0;
+				if(pos->num>=10)
+				{
+					carry = 1;
+					pos->num = pos->num%10;
+				}
+			}
+			else{
+				List temp = malloc(sizeof(struct Node));
+				temp->num = head1->num + carry;
+				carry = 0;
+				temp->next = NULL;
+				temp->prev = NULL;
+
+				head->prev = temp;
+				temp->next = head;
+				head = temp;
+			}
+			rear3 = rear3->prev;
+			if(pos!= NULL)
+				pos = pos->prev;
+		}
+		Delete(head1);//销毁临时链表
+		/**两链表相加 END **/
+		rear = rear->prev;//目标指针向前移一位
+		L1 = L1->prev;
+	}
+	return head;
+}
 // 大整数除法
