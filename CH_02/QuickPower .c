@@ -4,7 +4,7 @@ double Pow(double x, int n);
 
 int main(int argc, char **argv)
 {
-    printf("%f",Pow(3,7));
+    printf("%f",Pow(2,4000));
     return 0;
 }
 //常规取幂
