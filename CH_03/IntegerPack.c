@@ -6,6 +6,19 @@ typedef enum {
 	EQUAL
 }Judge;
 
+typedef enum {
+	ZERO = 0,
+	ONE ,
+	TWO,
+	THREE,
+	FOUR,
+	FIVE,
+	SIX,
+	SEVEN,
+	EIGHT,
+	NINE
+}Num;
+
 typedef struct Node* ptrToNode;
 typedef ptrToNode List;
 typedef struct Node** Position;
@@ -28,6 +41,9 @@ List BigIntegerSubtract(List rear1, List rear2);
 List BigIntegerMultiply(List rear1, List rear2);
 List BigIntegerDivision(List rear1, List rear2);
 List Copy(List rear1);
+void Distributed(List head);
+List Empty();
+List Filp(List pos);
 
 int main(int argc, char** argv)
 {
@@ -42,6 +58,7 @@ int main(int argc, char** argv)
 	// List head = BigIntegerSubtract(L, P);
 	// List head = BigIntegerMultiply(L, P);
 	List head = BigIntegerDivision(L, P);
+	Distributed(head);
 	PrintNode(head);
 	PrintNode(L_head);
 	PrintNode(P_head);
@@ -538,4 +555,125 @@ List Copy(List rear1)
 		pos = pos->prev;
 	}
 	return rear;
+}
+//计算数字分布 输入是首指针
+void Distributed(List head)
+{
+	List pos = head;
+	List add = malloc(sizeof(struct Node));
+	add->num = 1;
+	add->prev = NULL;
+	add->next = NULL;
+	List zero = Empty();
+	List one = Empty();
+	List two = Empty();
+	List three = Empty();
+	List four = Empty();
+	List five = Empty();
+	List six = Empty();
+	List seven = Empty();
+	List eight = Empty();
+	List nine = Empty();
+	while(pos != NULL)
+	{
+		switch(pos->num) {
+			case ZERO:
+			zero = BigIntegerAdd(zero,add);
+			zero = Filp(zero);
+			break;
+			case ONE:
+			one = BigIntegerAdd(one,add);
+			one = Filp(one);
+			break;
+			case TWO:
+			two = BigIntegerAdd(two,add);
+			two = Filp(two);
+			break;
+			case THREE:
+			three = BigIntegerAdd(three,add);
+			three = Filp(three);
+			break;
+			case FOUR:
+			four = BigIntegerAdd(four,add);
+			four = Filp(four);
+			break;
+			case FIVE:
+			five = BigIntegerAdd(five,add);
+			five = Filp(five);
+			break;
+			case SIX:
+			six = BigIntegerAdd(six,add);
+			six = Filp(six);
+			break;
+			case SEVEN:
+			seven = BigIntegerAdd(seven,add);
+			seven = Filp(seven);
+			break;
+			case EIGHT:
+			eight = BigIntegerAdd(eight,add);
+			eight = Filp(eight);
+			break;
+			case NINE:
+			nine = BigIntegerAdd(nine,add);
+			nine = Filp(nine);
+			break;
+			default:
+			printf("error");
+			break;
+		}
+		pos = pos->next;
+	}
+	zero = Filp(zero);
+	one = Filp(one);
+	two = Filp(two);
+	three = Filp(three);
+	four = Filp(four);
+	five = Filp(five);
+	six = Filp(six);
+	seven = Filp(seven);
+	eight = Filp(eight);
+	nine = Filp(nine);
+	printf("0:");
+	PrintNode(zero);
+	printf("1:");
+	PrintNode(one);
+	printf("2:");
+	PrintNode(two);
+	printf("3:");
+	PrintNode(three);
+	printf("4:");
+	PrintNode(four);
+	printf("5:");
+	PrintNode(five);
+	printf("6:");
+	PrintNode(six);
+	printf("7:");
+	PrintNode(seven);
+	printf("8:");
+	PrintNode(eight);
+	printf("9:");
+	PrintNode(nine);
+}
+//创建一个长度为1空链表
+List Empty()
+{
+	List head = malloc(sizeof(struct Node));
+	head->next = NULL;
+	head->prev = NULL;
+	head->num = 0;
+	return head;
+}
+//指针首末倒换
+List Filp(List pos)
+{
+	if(pos->next==NULL)
+	{
+		for(int i=0; i<Length(pos)-1; i++)
+		   pos = pos->prev;
+	}
+	else{
+		for(int i=0; i<Length(pos)-1;i++)
+		   pos = pos->next;
+	}
+	return pos;
 }
