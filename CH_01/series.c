@@ -1,3 +1,13 @@
+/**
+ * @file series.c
+ * @author 吴国栋 (872908391@qq.com)
+ * @brief 求幂
+ * @version 0.1
+ * @date 2022-05-14
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #include <stdio.h>
 #include <math.h>
 

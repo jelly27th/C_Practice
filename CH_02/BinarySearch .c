@@ -1,3 +1,13 @@
+/**
+ * @file BinarySearch .c
+ * @author 吴国栋 (872908391@qq.com)
+ * @brief 对分查找
+ * @version 0.1
+ * @date 2022-05-14
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #include <stdio.h>
 int BinarySearch(const char arr[],int Ele,int length);
 int main(int argc, char **argv)

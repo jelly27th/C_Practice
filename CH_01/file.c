@@ -1,5 +1,14 @@
 //  实际上没法只能打印当前文件的内容，嵌套的头文件没法打印，因为缺少查找相对路径和绝对路径的方法
-
+/**
+ * @file file.c
+ * @author 吴国栋 (872908391@qq.com)
+ * @brief 头文件索引
+ * @version 0.1
+ * @date 2022-05-14
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

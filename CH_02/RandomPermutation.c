@@ -1,3 +1,13 @@
+/**
+ * @file RandomPermutation.c
+ * @author 吴国栋 (872908391@qq.com)
+ * @brief N个自然数随机置换
+ * @version 0.1
+ * @date 2022-05-14
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>

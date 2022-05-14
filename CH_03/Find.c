@@ -28,7 +28,7 @@ int main(int argc, char** argv)
     List L = malloc(sizeof(struct Node));
     List head = NULL;
     
-    //创建两个链表P L
+    //创建链表L
     for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); i++)
     {
         L = CreateNode(arr[i], &head, L);
