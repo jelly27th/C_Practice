@@ -40,15 +40,15 @@ int main(int argc, char **argv)
                   /\ |
                 3 ---4
     **/
-    int graph[5][5] = {
-        {0,1,1,0,1},
-        {1,0,1,0,0},
-        {1,1,0,1,0},
-        {0,0,1,0,1},
-        {1,0,0,1,0}
-    };
-    int col = sizeof(graph[0]) / sizeof(graph[0][0]);//列
-    int row = sizeof(graph) / sizeof(graph[0]);//行
+    // int graph[5][5] = {
+    //     {0,1,1,0,1},
+    //     {1,0,1,0,0},
+    //     {1,1,0,1,0},
+    //     {0,0,1,0,1},
+    //     {1,0,0,1,0}
+    // };
+    // int col = sizeof(graph[0]) / sizeof(graph[0][0]);//列
+    // int row = sizeof(graph) / sizeof(graph[0]);//行
     int arr[] = {0,1,2,3,4,5};
     Position head = CursorAlloc();
     Position pos = head;
