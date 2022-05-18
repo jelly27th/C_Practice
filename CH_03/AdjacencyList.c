@@ -1,7 +1,7 @@
 /**
  * @file AdjacencyList.c
  * @author 吴国栋 (872908391@qq.com)
- * @brief 习题3.14
+ * @brief 习题3.14 a
  * @version 0.1
  * @date 2022-05-14
  *
@@ -42,7 +42,7 @@ int main(int argc, char** argv)
         stu[i].num = i;
         stu[i].next = NULL;
     }
-    AdjacencyList(graph, row, col, &stu);
+    AdjacencyList(graph, row, col, stu);
     //画图
     int draw[5][5] = { 0 };
     for (int i = 0; i < row; i++)
