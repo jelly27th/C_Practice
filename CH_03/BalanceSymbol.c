@@ -148,5 +148,6 @@ int CheckSymbol(const char* path)
         return 0;
     }
     fclose(fp);
+    ClearStack(S);
     return 1;
 }
