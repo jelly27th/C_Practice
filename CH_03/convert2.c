@@ -1,20 +1,22 @@
 /**
- * @file convert.c
+ * @file convert2.c
  * @author Jelly (wugd827@163.com)
- * @brief Exercise 3.20(a) and 3.20(b) 
+ * @brief Exercise 3.20(c)
  * @version 0.1
  * @date 2022-05-26
  * 
  * @copyright Copyright (c) 2022
  * 
  */
+
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define EmptyTOS -1
 #define STACK_SIZE 10
-typedef char ElementType;
+typedef char* ElementType;
 typedef struct StackRecord* Stack;
 struct StackRecord {
     int Capacity;
@@ -30,15 +32,17 @@ bool IsFull(Stack S);
 bool IsEmpty(Stack S);
 ElementType Top(Stack S);
 unsigned int operatorSort(char op);
-void InfixToPostfix(char* expressions,int length);
+ElementType PostfixToInfix(char* expressions,int length);
+void reverse(char* s,char* c);
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
-    char str[] = "a+b*c+(d*e+f)^h*g";
-    int len = sizeof(str)/ sizeof(str[0]);
-    
-    InfixToPostfix(str,len); 
-    printf("%s\n",str);
+    // char* str = "abc*+de*f+h^g*+";
+    char str[] = "abc*+de*f+h^g*+";
+    int length = sizeof(str) / sizeof(str[0]);
+    char* c = PostfixToInfix(str, length);
+    printf("%s\n", c);
+
     return 0;
 }
 
@@ -99,46 +103,7 @@ bool IsEmpty(Stack S)
 ElementType Top(Stack S)
 {
     return S->Array[S->TopOfStack];
-}
-// Infix expressions convert postfix expressions
-void InfixToPostfix(char* expressions,int length)
-{
-    char output[length];
-    Stack S = CreatStack(STACK_SIZE);
-    int j = 0;
-    for(int i=0;i<length-1;i++)
-    {
-        if((expressions[i]>='a'&&expressions[i]<='z')||(expressions[i]>='0'&&expressions[i]<='9')
-        ||(expressions[i]>='A'&&expressions[i]<='Z'))//is number or letter output
-           output[j++] = expressions[i];
-        else//not number or letter
-        {
-            if(IsEmpty(S)) Push(S,expressions[i]); //the stack is empty push stack
-            else if(expressions[i]=='(') Push(S,expressions[i]);// is '(' push stack
-            else if(expressions[i]==')') //is ')' pop stack when top is ')' stop
-            {
-                while(Top(S)!='(')
-                {
-                    output[j++] = Pop(S);
-                }
-                Pop(S);
-            }
-            else 
-            {
-                while(operatorSort(expressions[i])<=operatorSort(Top(S)))
-                {
-                    output[j++] = Pop(S);
-                    if(IsEmpty(S)) break;//when the stack is empty break the loop
-                }
-                Push(S,expressions[i]);
-            }
-        }
-    }
-    while(!IsEmpty(S)) output[j++] = Pop(S);
-    ClearStack(S);
-    output[j] = '\0';
-    for (int i = 0; i <length; i++)
-        expressions[i] = output[i];
+    // return S->Array;
 }
 // Implement operator precedence
 unsigned int operatorSort(char op)
@@ -153,4 +118,57 @@ unsigned int operatorSort(char op)
     else if(op=='(')
        priority = 0;
     return priority;
+}
+//  postfix expressions convert Infix expressions
+ElementType PostfixToInfix(char* expressions, int length)
+{
+    Stack S = CreatStack(10);
+    for (int i = 0; i < length - 1; i++)
+    {
+        if ((expressions[i] >= 'a' && expressions[i] <= 'z') || (expressions[i] >= '0' && expressions[i] <= '9')
+            || (expressions[i] >= 'A' && expressions[i] <= 'Z'))//is number or letter Push stack
+        {
+            char* str = malloc(sizeof(char) * 100);
+            str[0] = expressions[i], str[1] = '\0';
+            Push(S, str);
+        }
+        else
+        {
+            char ch[100] = "(";
+            char* str = malloc(sizeof(char) * 2);
+            str[0] = expressions[i],str[1] = '\0';
+            //spilc the expressions
+            strcat(ch, Top(S));
+            free(Pop(S));
+
+            strcat(ch, str);
+            free(str);
+
+            strcat(ch,Top(S));
+
+            strcat(ch, ")");
+            strcpy(Top(S), ch);
+        }
+    }
+    char* c = Top(S);
+    Pop(S);
+    clearStack(S);
+    char s[100] = {0};//teh temp string
+    reverse(c,s);//reverse string
+    return c;
+}
+// reverse the string
+void reverse(char* c,char* s)
+{
+    for (int i = strlen(c)-1,j = 0; i>=0 ; i--,j++)
+    {
+        s[j] = c[i];
+        if (s[j] == '(') s[j] = ')';
+        else if (s[j] == ')') s[j] = '(';
+    }
+    
+    for (int i = 0; i < strlen(c); i++)
+    {
+        c[i] = s[i];
+    }
 }
