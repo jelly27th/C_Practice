@@ -154,7 +154,7 @@ ElementType PostfixToInfix(char* expressions, int length)
     Pop(S);
     clearStack(S);
     char s[100] = {0};//teh temp string
-    reverse(c,s);//reverse string
+    reverse(c,s);//reverse the string
     return c;
 }
 // reverse the string
