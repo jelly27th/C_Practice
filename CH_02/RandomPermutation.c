@@ -1,6 +1,6 @@
 /**
  * @file RandomPermutation.c
- * @author 吴国栋 (872908391@qq.com)
+ * @author Jelly (wugd827@163.com)
  * @brief N个自然数随机置换
  * @version 0.1
  * @date 2022-05-14

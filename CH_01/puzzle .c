@@ -1,6 +1,6 @@
 /**
  * @file puzzle .c
- * @author 吴国栋 (872908391@qq.com)
+ * @author Jelly (wugd827@163.com)
  * @brief 解字谜游戏问题
  * @version 0.1
  * @date 2022-05-14
