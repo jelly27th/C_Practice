@@ -1,3 +1,13 @@
+/**
+ * @file Swap.c
+ * @author Jelly (wugd827@163.com)
+ * @brief Exercise 3.3
+ * @version 0.1
+ * @date 2022-05-29
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -214,9 +224,9 @@ DoubleList SwapDoubleNode(DoubleList pos,DoubleList start)
     if(start->next == NULL&&start->prev == NULL)
        return start;
     //有多个节点
-    if(pos==start)
+    if(pos==start)//交换位于头节点
     {
-        if(pos->prev == NULL)
+        if(pos->prev == NULL)//尾插法
         {
             DoubleList pos1 = pos->next;
             DoubleList pos2 = pos1->next;
@@ -230,7 +240,7 @@ DoubleList SwapDoubleNode(DoubleList pos,DoubleList start)
             start = pos1;
             return start;
         }
-        else if(pos->next == NULL)
+        else if(pos->next == NULL)//头插法
         {
             DoubleList pos1 = pos->prev;
             DoubleList pos2 = pos1->prev;

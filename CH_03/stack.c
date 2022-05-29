@@ -1,6 +1,6 @@
 /**
  * @file stack.c
- * @author 吴国栋 (872908391@qq.com)
+ * @author Jelly (wugd827@163.com)
  * @brief 实现栈(数组)
  * @version 0.1
  * @date 2022-05-24
