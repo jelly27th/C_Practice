@@ -30,7 +30,7 @@ SearchTree MakeEmpty(SearchTree T);
 Position Find(SearchTree T, ElementType element);
 Position FindMin(SearchTree T);
 Position FindMax(SearchTree T);
-SearchTreeAddress Insert(SearchTreeAddress T,ElementType element);
+SearchTree Insert(SearchTree T,ElementType element);
 SearchTree DeleteRight(SearchTree T,ElementType element);
 SearchTree Preorder(SearchTree T);
 SearchTree DeleteLeft(SearchTree T,ElementType element);
@@ -45,7 +45,7 @@ int main(int argc, char** argv)
   int len = sizeof(arr)/ sizeof(arr[0]);
   for (int i = 0; i < len; i++)
   {
-    Insert(&T,arr[i]);
+    T = Insert(T,arr[i]);
   }
   // printf("%d\n",Find(T,61)->data);
   // printf("%d\n",FindMin(T)->data);
@@ -108,19 +108,19 @@ Position FindMax(SearchTree T)
     return T;
 }
 // insert element at the tree 
-SearchTreeAddress Insert(SearchTreeAddress T,ElementType element)
+SearchTree Insert(SearchTree T,ElementType element)
 {
-    if(*T==NULL)//when the point is null
+    if(T==NULL)//when the point is null
     {
         // create a tree node for the tree
-        *T = malloc(sizeof(TreeNode));
-        (*T)->data = element;
-        (*T)->left = (*T)->right = NULL;
+        T = malloc(sizeof(TreeNode));
+        (T)->data = element;
+        (T)->left = (T)->right = NULL;
     }
-    else if((*T)->data>element)//if the element less than the data,go left insert the element
-      return Insert(&(*T)->left,element);
-    else if((*T)->data<element)//if the element is greater than the data,go right insert the element
-      return Insert(&(*T)->right,element);
+    else if((T)->data>element)//if the element less than the data,go left insert the element
+      (T)->left = Insert((T)->left,element);
+    else if((T)->data<element)//if the element is greater than the data,go right insert the element
+      (T)->right = Insert((T)->right,element);
     return T;//insert completed successfully
 }
 // find the element at the tree and delete it(replace it with a right subtree minimum)
