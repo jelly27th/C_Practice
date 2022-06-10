@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define max(a,b) a > b ? a : b
+#define MAX(a,b) (a > b ? a : b)
 typedef int ElementType;
 typedef struct _AvlNode AvlNode;
 typedef AvlNode* AvlTree;
@@ -49,7 +49,7 @@ int main(int argc, char **argv)
   printf("%d %d\n",FindMin(T)->data,FindMin(T)->height);
   printf("%d %d\n",FindMax(T)->data,FindMax(T)->height);
   Preorder(T);
-  MakeEmpty(T);
+  T = MakeEmpty(T);
   printf("%p\n",T);
   return 0;
 }
@@ -113,8 +113,8 @@ static Position SingleRoateLeft(Position K2)
     K2->left = K1->right;
     K1->right = K2;
 
-    K2->height = max(Height(K1->left),Height(K2->right))+1;
-    K1->height = max(Height(K1->left),K2->height)+1;
+    K2->height = MAX(Height(K2->left),Height(K2->right))+1;
+    K1->height = MAX(Height(K1->left),K2->height)+1;
     return K1;
 }
 // roate the type of the RR
@@ -126,8 +126,8 @@ static Position SingleRoateRight(Position K1)
   K1->right = K2->left;
   K2->left = K1;
   // update node height
-  K1->height = max(Height(K1->left),Height(K2->right))+1;
-  K2->height = max(Height(K2->right),K1->height)+1;
+  K1->height = MAX(Height(K1->left),Height(K1->right))+1;
+  K2->height = MAX(Height(K2->right),K1->height)+1;
 
   return K2;
 }
@@ -146,42 +146,37 @@ static Position DoubleRoateRight(Position K1)
 // insert element in the AvlTree
 AvlTree Insert(AvlTree T, ElementType element)
 {
-  // AvlTreeAdress pos = NULL;
   if(T==NULL)
   {
     T = malloc(sizeof(AvlNode));
-    (T)->height = 0;
-    (T)->data = element;
-    (T)->left = (T)->right = NULL;
+    T->height = 0;
+    T->data = element;
+    T->left = T->right = NULL;
   }
-  else if(element<(T)->data)//include the type of the LL and LR
+  else if(element<T->data)//include the type of the LL and LR
   {
-    // pos = &(*T)->left;
-    // pos = Insert(&(*T)->left,element);
-    (T)->left = Insert((T)->left,element);
-    if(Height((T)->left)-Height((T)->right)==2)
+    T->left = Insert(T->left,element);
+    if(Height(T->left)-Height(T->right)==2)
     {
-      if(element<(T)->left->data)
+      if(element<T->left->data)
         T = SingleRoateLeft(T);//LL
       else
         T = DoubleRoateLeft(T);//RR
     }
   }
-  else if(element>(T)->data)//include the type of the RR and RL
+  else if(element>T->data)//include the type of the RR and RL
   {
-    // pos = &(*T)->right;
-    // pos = Insert(&(*T)->right, element);
-    (T)->right = Insert((T)->right, element);
-    if(Height((T)->right)-Height((T)->left)==2)
+    T->right = Insert(T->right, element);
+    if(Height(T->right)-Height(T->left)==2)
     {
-      if(element>(T)->right->data)
+      if(element>T->right->data)
         T = SingleRoateRight(T);//RR
       else
         T = DoubleRoateRight(T);//RL
     }
   }
   //update node height
-  (T)->height = max(Height((T)->left),Height((T)->right))+1;
+  T->height = MAX(Height(T->left),Height(T->right))+1;
   return T;
 }
 // Preorder traversal the AvlTree
