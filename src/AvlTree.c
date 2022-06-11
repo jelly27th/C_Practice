@@ -1,100 +1,58 @@
 /**
  * @file AvlTree.c
  * @author Jelly (wugd827@163.com)
- * @brief Exercise 4.18
+ * @brief Exercise 4.18 and Exercise 4.19
  * @version 0.1
- * @date 2022-06-08
+ * @date 2022-06-11
  * @Reference link https://www.linuxidc.com/Linux/2017-05/144050.htm
  * @copyright Copyright (c) 2022
  * 
  */
+#include "AvlTree.h"
+#include<stdio.h>
+#include<stdlib.h>
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#define MAX(a,b) (a > b ? a : b)
-typedef int ElementType;
-typedef struct _AvlNode AvlNode;
-typedef AvlNode* AvlTree;
-typedef AvlTree* AvlTreeAdress;
-typedef AvlNode* Position;
-
-struct _AvlNode{
-    ElementType data;
-    int height;
-    AvlTree left;
-    AvlTree right;
-};
-AvlTree MakeEmpty(AvlTree T);
-Position Find(AvlTree T, ElementType element);
-Position FindMin(AvlTree T);
-Position FindMax(AvlTree T);
-static int Height(Position P);
-static Position SingleRoateLeft(Position K2);
-static Position SingleRoateRight(Position K1);
-static Position DoubleRoateLeft(Position K3);
-static Position DoubleRoateRight(Position K1);
-AvlTree Insert(AvlTree T, ElementType element);
-AvlTree Preorder(AvlTree T);
-
-int main(int argc, char **argv)
-{
-  int arr[] = {2,1,4,5,9,3,6,7};
-  AvlTree T = NULL;
-  int len = sizeof(arr) / sizeof(arr[0]);
-  for (int i = 0; i < len; i++)
-  {
-    T = Insert(T,arr[i]);
-  }
-  printf("%d %d\n",FindMin(T)->data,FindMin(T)->height);
-  printf("%d %d\n",FindMax(T)->data,FindMax(T)->height);
-  Preorder(T);
-  T = MakeEmpty(T);
-  printf("%p\n",T);
-  return 0;
-}
-
-AvlTree MakeEmpty(AvlTree T)
+AvlTree AvlMakeEmpty(AvlTree T)
 {
     if(T==NULL) 
       return NULL;
     else{
-        MakeEmpty(T->left);
-        MakeEmpty(T->right);
+        AvlMakeEmpty(T->left);
+        AvlMakeEmpty(T->right);
         free(T);
     }
     return NULL;
 }
 
-Position Find(AvlTree T, ElementType element)
+Position AvlFind(AvlTree T, ElementType element)
 {
     if(T==NULL)
       return NULL;
     else if(element<T->data)
-      return Find(T->left,element);
+      return AvlFind(T->left,element);
     else if(element>T->data)
-      return Find(T->right, element);
+      return AvlFind(T->right, element);
     return T;
 }
 
-Position FindMin(AvlTree T)
+Position AvlFindMin(AvlTree T)
 {
     if(T==NULL)
       return NULL;
     else if(T->left==NULL)
       return T;
     else
-      return FindMin(T->left);
+      return AvlFindMin(T->left);
 }
 
-Position FindMax(AvlTree T)
+Position AvlFindMax(AvlTree T)
 {
     if(T==NULL)
       return NULL;
     else if(T->right==NULL)
       return T;
     else
-      return FindMax(T->right);
+      return AvlFindMax(T->right);
 }
 // get the height of the node
 static int Height(Position P)
@@ -144,7 +102,7 @@ static Position DoubleRoateRight(Position K1)
   return SingleRoateRight(K1);
 }
 // insert element in the AvlTree
-AvlTree Insert(AvlTree T, ElementType element)
+AvlTree AvlInsert(AvlTree T, ElementType element)
 {
   if(T==NULL)
   {
@@ -155,7 +113,7 @@ AvlTree Insert(AvlTree T, ElementType element)
   }
   else if(element<T->data)//include the type of the LL and LR
   {
-    T->left = Insert(T->left,element);
+    T->left = AvlInsert(T->left,element);
     if(Height(T->left)-Height(T->right)==2)
     {
       if(element<T->left->data)
@@ -166,7 +124,7 @@ AvlTree Insert(AvlTree T, ElementType element)
   }
   else if(element>T->data)//include the type of the RR and RL
   {
-    T->right = Insert(T->right, element);
+    T->right = AvlInsert(T->right, element);
     if(Height(T->right)-Height(T->left)==2)
     {
       if(element>T->right->data)
@@ -180,15 +138,16 @@ AvlTree Insert(AvlTree T, ElementType element)
   return T;
 }
 // Preorder traversal the AvlTree
-AvlTree Preorder(AvlTree T)
+AvlTree AvlPreorder(AvlTree T)
 {
   if(T==NULL)
     return NULL;
   else
   {
     printf("%d ",T->data);
-    Preorder(T->left);
-    Preorder(T->right);
+    AvlPreorder(T->left);
+    AvlPreorder(T->right);
   }
   return T;
 }
+// Insert element in the AvlTree with no recursion
