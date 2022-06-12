@@ -9,6 +9,7 @@
  * 
  */
 #include "AvlTree.h"
+#include "Stack.h"
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -24,7 +25,7 @@ AvlTree AvlMakeEmpty(AvlTree T)
     return NULL;
 }
 
-Position AvlFind(AvlTree T, ElementType element)
+Position AvlFind(AvlTree T, AvlElementType element)
 {
     if(T==NULL)
       return NULL;
@@ -102,7 +103,7 @@ static Position DoubleRoateRight(Position K1)
   return SingleRoateRight(K1);
 }
 // insert element in the AvlTree
-AvlTree AvlInsert(AvlTree T, ElementType element)
+AvlTree AvlInsert(AvlTree T, AvlElementType element)
 {
   if(T==NULL)
   {
@@ -119,7 +120,7 @@ AvlTree AvlInsert(AvlTree T, ElementType element)
       if(element<T->left->data)
         T = SingleRoateLeft(T);//LL
       else
-        T = DoubleRoateLeft(T);//RR
+        T = DoubleRoateLeft(T);//LR
     }
   }
   else if(element>T->data)//include the type of the RR and RL
@@ -151,3 +152,65 @@ AvlTree AvlPreorder(AvlTree T)
   return T;
 }
 // Insert element in the AvlTree with no recursion
+AvlTree AvlInsertNoRecursion(AvlTree T, AvlElementType element)
+{
+  Stack S = CreatStack(10);
+  while(true)
+  {
+    // find the suitable position with the element
+    // need a stack to record the path to the element
+    if(T==NULL)
+    {
+      T = malloc(sizeof(AvlNode));
+      T->height = 0;
+      T->data = element;
+      T->left = T->right = NULL;
+      Push(S, T);
+      break;
+    }
+    else if(element<T->data)//element less than node data,go left
+    {
+      Push(S, T);
+      T = T->left;
+    }
+    else if(element>T->data)//more than node data,go right
+    {
+      Push(S, T);
+      T = T->right;
+    }
+  }
+  AvlTree Parent = NULL;
+  while(!IsEmpty(S))
+  {
+    Parent = TopAndPop(S);
+    if(T->data<Parent->data)
+    {
+      Parent->left = T;//element link to parent
+      if(Height(Parent->left)-Height(Parent->right)==2)
+      {
+        if(element<Parent->left->data)
+          Parent = SingleRoateLeft(Parent);//LL
+        else
+          Parent = DoubleRoateLeft(Parent);//LR
+      }
+    }
+    else if(T->data>Parent->data)
+    {
+      Parent->right = T;//element link to parent
+      if(Height(Parent->right)-Height(Parent->left)==2)
+      {
+        if(element>Parent->right->data)
+          Parent = SingleRoateRight(Parent);//RR
+        else
+          Parent = DoubleRoateRight(Parent);//RL
+      }
+    }
+    T = Parent;
+    // update the parent height
+    T->height = MAX(Height(T->left),Height(T->right))+1;
+  }
+  //update the parent height when you not use to roate
+  //In fact,I did extra work,because Parent node height is repeatly calculated
+  T->height = MAX(Height(T->left),Height(T->right))+1;
+  return T;
+} 
