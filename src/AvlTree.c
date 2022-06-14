@@ -1,7 +1,7 @@
 /**
  * @file AvlTree.c
  * @author Jelly (wugd827@163.com)
- * @brief Exercise 4.18 and Exercise 4.19
+ * @brief Exercise 4.18 and Exercise 4.19 and Exercise 4.22
  * @version 0.1
  * @date 2022-06-11
  * @Reference link https://www.linuxidc.com/Linux/2017-05/144050.htm
