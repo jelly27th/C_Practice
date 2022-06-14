@@ -321,3 +321,64 @@ AvlTree AvlDelete(AvlTree T, AvlElementType element)
     T->height = MAX(Height(T->left),Height(T->right))+1;
   return T;
 }
+//Here is another version of the double roation functions,
+// it is said to be far more efficient than two single roation functions
+// note: I have not tested either of these functions
+// because i don't want to rewrite AvlDelete function,although it is not difficult\
+
+// roate the type of the LR
+/*
+      K3                              K2
+     /  \                            /  \
+    K1   D      LR                  K1   K3
+   /  \         -->                / \   / \
+  A    K2                         A   B C   D
+      /  \                                       
+     B    C          
+*/
+static Position AnotherDoubleRoateLeft(Position K3)
+{
+  Position K1,K2;
+
+  K1 = K3->left;
+  K2 = K1->right;
+
+  K1->right = K2->left;
+  K3->left = K2->right;
+  K2->left = K1;
+  K2->right = K3;
+  
+  K1->height = MAX(Height(K1->left),Height(K1->right))+1;
+  K3->height = MAX(Height(K3->left),Height(K3->right))+1;
+  K2->height = MAX(Height(K2->left),Height(K2->right))+1;
+
+  return K2;
+}
+// roate the type of the RL
+/*
+        k1                       k2
+       /  \                     /  \
+      A    K3        RL        K1   K3
+          /  \       -->      /  \  / \
+         K2   D              A    B C  D   
+        / \                    
+       B   C               
+*/
+static Position AnotherDoubleRoateRight(Position K1)
+{
+  Position K2,K3;
+
+  K3 = K1->left;
+  K2 = K3->left;
+
+  K1->right = K2->left;
+  K3->left = K2->right;
+  K2->left = K1;
+  K2->right = K3;
+
+  K1->height = MAX(Height(K1->left),Height(K1->right))+1;
+  K3->height = MAX(Height(K3->left),Height(K3->right))+1;
+  K2->height = MAX(Height(K2->left),Height(K2->right))+1;
+
+  return K2;
+}
