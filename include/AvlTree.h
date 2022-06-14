@@ -27,4 +27,5 @@ static Position DoubleRoateRight(Position K1);
 AvlTree AvlInsert(AvlTree T, AvlElementType element);
 AvlTree AvlPreorder(AvlTree T);
 AvlTree AvlInsertNoRecursion(AvlTree T, AvlElementType element);
+AvlTree AvlDelete(AvlTree T, AvlElementType element);
 #endif

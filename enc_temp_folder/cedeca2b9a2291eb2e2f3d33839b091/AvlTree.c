@@ -260,7 +260,8 @@ AvlTree AvlDelete(AvlTree T, AvlElementType element)
   {
     T->left = AvlDelete(T->left,element);
     // the statment is to deal with a parent node that has only one child node
-    T->height = MAX(Height(T->left),Height(T->right))+1;
+    // because the program can't handle this situation
+    if(T->left==NULL&&T->right==NULL) T->height = 0;
     // when you delete the node in the left subtree,return the root node
     // There are two situations:
     // 1. it will occur the unbalanced type of RL
@@ -277,7 +278,8 @@ AvlTree AvlDelete(AvlTree T, AvlElementType element)
   {
     T->right = AvlDelete(T->right,element);
     // the statment is to deal with a parent node that has only one child node
-    T->height = MAX(Height(T->left),Height(T->right))+1;
+    // because the program can't handle this situation
+    if(T->left==NULL&&T->right==NULL) T->height = 0;
     // when you delete the node in the right subtree,return the root node
     // There are two situations:
     // 1. it will occur the unbalanced type of LR
@@ -316,8 +318,5 @@ AvlTree AvlDelete(AvlTree T, AvlElementType element)
     else if(T->right==NULL) T = T->left;
     free(temp);
   }
-  //when the point is not NULL,update the height of the node
-  if(T!= NULL)
-    T->height = MAX(Height(T->left),Height(T->right))+1;
   return T;
 }
