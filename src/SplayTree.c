@@ -25,13 +25,9 @@ SplayTree SplayMakeEmpty(SplayTree T)
     return NULL;
 }
 /**
- * @brief find the element and make it the root node
+ * @brief find the element and make it the root node.
           note: zig-zag(之字形) zig-zig(一字型)
-          there are four cases:
-          1) the type of left zig-zag ,you can see ZigZagLeftRoate()
-          2) the type of right zig-zag ,you can see ZigZagRightRoate()
-          3) the type of right zig-zig ,you can see ZigZagLeftRoate()
-          4) the type of left zig-zig ,you can see ZigZagRightRoate()
+          for detail , you can see Splay().
  * 
  * @param T 
  * @param element 
@@ -44,31 +40,7 @@ SplayTree SplayMakeEmpty(SplayTree T)
  */
 Position SplayFind(SplayTree T, SplayElementType element)
 {
-    if(T==NULL)
-      return NULL;
-    else if(element<T->data)
-    {
-      T->left = SplayFind(T->left,element);
-      if(T->left->data!=element)
-      {
-        if(element<T->left->data)
-           T = ZigZigLeftRoate(T);
-        else
-           T = ZigZagLeftRoate(T);
-      }
-    } 
-    else if(element>T->data)
-    {
-      T->right = SplayFind(T->right, element);
-      if(T->right->data!=element)
-      {
-        if(element>T->right->data)
-           T = ZigZigRightRoate(T);
-        else
-           T = ZigZagRightRoate(T);
-      }
-    }
-    return T;
+  return Splay(T,element);
 }
 Position SplayFindMin(SplayTree T)
 {
@@ -87,112 +59,6 @@ Position SplayFindMax(SplayTree T)
       return T;
     else
       return SplayFindMax(T->right);
-}
-/**
- * @brief roate the type of left zig-zag
- *a example
-            G                       X
-           / \                     / \ 
-          P   D     LR            P   G 
-         / \        -->          / \ / \ 
-        A   x                   A  B C  D 
-           / \
-          B   C
- * 
- * @param G 
- * @return Position 
- * @file SplayTree.c
- * @version 0.1
- * @author Jelly (wugd827@163.com)
- * @date 2022-07-31
- * @copyright Copyright (c) 2022
- */
-static Position ZigZagLeftRoate(Position G)
-{
-    Position P,X;
-
-    P = G->left;
-    X = P->left;
-
-    P->right =  X->left;
-    G->left = X->right;
-    X->left = P;
-    X->right = G;
-
-    return X;
-}
-//roate the type of left zig-zig
-/*
-           G                       X
-          / \                     / \ 
-         P   D                   A   P
-        / \         -->             / \ 
-       X   C                       B   G
-      / \                             / \ 
-     A   B                           C   D  
-*/
-static Position ZigZigLeftRoate(Position G)
-{
-    Position P,X;
-
-    P = G->left;
-    X = P->left;
-
-    G->left = P->right;
-    P->right = G;
-    P->left = X->right;
-    X->right = P;
-
-    return X;
-}
-//roate the type of right zig-zag
-/*
-        G                        X
-       /  \                     /  \
-      D    P        RL         G     P
-          /  \       -->      /  \  / \
-         X    A              D    B C  A   
-        / \                    
-       B   C               
-*/
-static Position ZigZagRightRoate(Position G)
-{
-  Position P,X;
-
-  P = G->right;
-  X = P->left;
-
-  G->right = X->left;
-  P->left = X->right;
-  X->left = G;
-  X->right = P;
-
-  return X;
-}
-//roate the type of right zig-zig
-//roate the type of left zig-zig
-/*
-           G                       X
-          / \                     / \ 
-         P   D                   A   P
-        / \         <--             / \ 
-       X   C                       B   G
-      / \                             / \ 
-     A   B                           C   D  
-*/
-static Position ZigZigRightRoate(Position X)
-{
-  Position P,G;
-
-  P = X->right;
-  G = X->left;
-
-  X->right = P->left;
-  P->left = X;
-  P->right = G->left;
-  G->left = P;
-
-  return G;
 }
 // This function is no different from the ordinary binary search tree search function.
 SplayTree SplayInsert(SplayTree T, SplayElementType element)
@@ -216,9 +82,9 @@ SplayTree SplayPreorder(SplayTree T)
     return NULL;
     else
     {
-        printf("%d ",T->data);
-        SplayPreorder(T->left);
-        SplayPreorder(T->right);
+      printf("%d ",T->data);
+      SplayPreorder(T->left);
+      SplayPreorder(T->right);
     }
     return T;
 }
@@ -272,4 +138,140 @@ SplayTree SplayDelete(SplayTree T, SplayElementType element)
         free(temp);
     }
     return T;
+}
+/*
+                y                                     x
+               / \     Zig (Right Rotation)          /  \
+              x   T3   – - – - – - – - - ->         T1   y 
+             / \       < - - - - - - - - -              / \
+            T1  T2     Zag (Left Rotation)            T2   T3
+*/
+static Position LeftRoate(Position x)
+{
+  Position y = x->right;
+
+  x->right = y->left;
+  y->left = x;
+
+  return y;
+}
+static Position RightRoate(Position y)
+{
+  Position x = y->left;
+
+  y->left = x->right;
+  x->right = y;
+
+  return x;
+}
+/**
+ * @brief There are three types of situations
+ *        1) node is root or node is not exists
+ *        2) node is child of root  
+ *              y                                     x
+               / \     Zig (Right Rotation)          /  \
+              x   T3   – - – - – - – - - ->         T1   y 
+             / \       < - - - - - - - - -              / \
+            T1  T2     Zag (Left Rotation)            T2   T3
+          3) node has both parent and child , This pack of four cases
+          Zig-Zig (Left Left Case):
+       G                        P                           X       
+      / \                     /   \                        / \      
+     P  T4   rightRotate(G)  X     G     rightRotate(P)  T1   P     
+    / \      ============>  / \   / \    ============>       / \    
+   X  T3                   T1 T2 T3 T4                      T2  G
+  / \                                                          / \ 
+ T1 T2                                                        T3  T4 
+
+Zag-Zag (Right Right Case):
+  G                          P                           X       
+ /  \                      /   \                        / \      
+T1   P     leftRotate(G)  G     X     leftRotate(P)    P   T4
+    / \    ============> / \   / \    ============>   / \   
+   T2   X               T1 T2 T3 T4                  G   T3
+       / \                                          / \ 
+      T3 T4                                        T1  T2
+Zag-Zig (Left Right Case):
+       G                        G                            X       
+      / \                     /   \                        /   \      
+     P   T4  leftRotate(P)   X     T4    rightRotate(G)   P     G     
+   /  \      ============>  / \          ============>   / \   /  \    
+  T1   X                   P  T3                       T1  T2 T3  T4 
+      / \                 / \                                       
+    T2  T3              T1   T2                                     
+
+Zig-Zag (Right Left Case):
+  G                          G                           X       
+ /  \                      /  \                        /   \      
+T1   P    rightRotate(P)  T1   X     leftRotate(G)    G     P
+    / \   =============>      / \    ============>   / \   / \   
+   X  T4                    T2   P                 T1  T2 T3  T4
+  / \                           / \                
+ T2  T3                        T3  T4        
+ * @see the code is adopted https://www.geeksforgeeks.org/splay-tree-set-1-insert/
+ * @param T 
+ * @param element 
+ * @return Position 
+ * @file SplayTree.c
+ * @version 0.1
+ * @author Jelly (wugd827@163.com)
+ * @date 2022-08-01
+ * @copyright Copyright (c) 2022
+ */
+Position Splay(SplayTree T,SplayElementType element)
+{
+  //1) root is null or the node is present in root
+  if(T==NULL||T->data==element) return T;
+  
+  //node in left subtree
+  if(T->data>element)
+  {
+    // node is not in tree, we are done
+    if(T->left==NULL) return T;
+
+    // 2)zig-zig(left left) 
+    if(T->left->data>element)
+    {
+      T->left->left = Splay(T->left->left,element);
+
+      //Do first rotation for root, second rotation is done after else
+      T = RightRoate(T);
+    }
+    // 3)zig-zag(left right)
+    else if(T->left->data<element) 
+    {
+      T->left->right = Splay(T->left->right,element);
+
+      // Do first rotation for root->left
+      if(T->left->right!= NULL)
+        T->left = LeftRoate(T->left);
+    }
+
+    // Do second rotation for root
+    return (T->left==NULL) ? T: RightRoate(T);
+  }
+  else // node in the right subtree
+  {
+    // node is not in tree, we are done
+    if(T->right==NULL) return T;
+
+    //4)zag-zig(right left) 
+    if(T->right->data>element)
+    {
+      T->right->left =  Splay(T->right->left, element);
+
+      // Do first rotation for root->right
+      if(T->right->left!=NULL)
+        T->right = RightRoate(T->right);
+    }
+    //5)zag-zag(right right)
+    else if(T->right->data<element)
+    {
+      T->right->right = Splay(T->right->right, element);
+
+      //Do first rotation for root, second rotation is done after else
+      T = LeftRoate(T);
+    }
+    return (T->right==NULL) ? T : LeftRoate(T);
+  }
 }

@@ -11,7 +11,7 @@
 #include "SplayTree.h"
 #include <stdio.h>
 #include <stdlib.h>
-#define LENGTH 7
+#define LENGTH 32
 
 int main(int argc, char **argv)
 {
@@ -20,7 +20,9 @@ int main(int argc, char **argv)
     {
         T =  SplayInsert(T, i);
     }
-    printf("%d\n", SplayFind(T,1)->data);
+    SplayPreorder(T);
+    T = SplayFind(T, 1);
+    printf("\n%d\n", T->data);
     SplayPreorder(T);
     T = SplayMakeEmpty(T);
     return 0;

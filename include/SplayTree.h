@@ -19,9 +19,8 @@ Position SplayFindMin(SplayTree T);
 Position SplayFindMax(SplayTree T);
 SplayTree SplayPreorder(SplayTree T);
 SplayTree SplayDelete(SplayTree T, SplayElementType element);
-static Position ZigZagLeftRoate(Position G);
-static Position ZigZigLeftRoate(Position G);
-static Position ZigZagRightRoate(Position G);
-static Position ZigZigRightRoate(Position X);
+static Position LeftRoate(Position x);
+static Position RightRoate(Position y);
 SplayTree SplayInsert(SplayTree T, SplayElementType element);
+Position Splay(SplayTree T,SplayElementType element);
 #endif
