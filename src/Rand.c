@@ -14,5 +14,5 @@ int RandInt(int lower, int upper)
 {
   srand((unsigned)time(NULL));
   Sleep(1000);//滞后1S
-  return rand() % upper+lower;
+  return rand() % (upper+1-lower)+lower;
 }

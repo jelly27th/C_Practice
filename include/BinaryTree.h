@@ -26,5 +26,7 @@ void BinaryRandomDelete(BinaryTree T, ElementType element);
 int CountNodes(BinaryTree T);
 int CountLeaves(BinaryTree T);
 int CountFull(BinaryTree T);
+BinaryTree MakeBinaryRandomTree1(int lower,int upper);
+BinaryTree MakeBinaryRandomTree(int N);
 
 #endif

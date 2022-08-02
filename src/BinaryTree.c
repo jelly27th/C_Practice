@@ -181,3 +181,31 @@ int CountFull(BinaryTree T)
   return (T->left!=NULL&&T->right!=NULL)+
            CountFull(T->left) + CountFull(T->right); 
 }
+
+BinaryTree MakeBinaryRandomTree1(int lower,int upper)
+{
+  BinaryTree T;
+  int RandomValue;
+
+  T = NULL;
+  if(lower<=upper)
+  {
+    T = malloc(sizeof(TreeNode));      
+    if(T!= NULL)
+    {
+      T->data = RandomValue = RandInt(lower, upper);
+      printf("RandomValue = %d\n", RandomValue);
+      T->left =  MakeBinaryRandomTree1(lower, RandomValue-1);
+      T->right = MakeBinaryRandomTree1(RandomValue+1, upper);
+    }
+    // else
+    //   FatalError("Out of space!");
+  }
+  return T;
+}
+
+BinaryTree MakeBinaryRandomTree(int N)
+{
+  return MakeBinaryRandomTree1(1, N);
+}
+
