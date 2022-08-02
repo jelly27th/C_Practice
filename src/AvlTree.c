@@ -382,3 +382,53 @@ static Position AnotherDoubleRoateRight(Position K1)
 
   return K2;
 }
+
+AvlTree MinGenTree(int height, int* lastNode)
+{
+  AvlTree T;
+
+  if(height>=0)
+  {
+    T = malloc(sizeof(AvlNode));
+    T->left = MinGenTree(height-1,lastNode);
+    T->data = ++(*lastNode);
+    T->height = 0;
+    T->right = MinGenTree(height-2,lastNode);
+    // update height
+    T->height = MAX(Height(T->left),Height(T->right))+1;
+    return T;
+  }
+  else
+    return NULL;
+}
+
+AvlTree MinAvlTree(int H)
+{
+  int lastNodeAssigned = 0;
+  return MinGenTree(H,&lastNodeAssigned);
+}
+
+AvlTree PerfectGenTree(int height, int* lastNode)
+{
+  AvlTree T;
+
+  if(height>=0)
+  {
+    T = malloc(sizeof(AvlNode));
+    T->left = PerfectGenTree(height-1,lastNode);
+    T->data = ++(*lastNode);
+    T->height = 0;
+    T->right = PerfectGenTree(height-1,lastNode);
+    // update the height
+    T->height = MAX(Height(T->left),Height(T->right))+1;
+    return T;
+  }
+  else
+    return NULL;
+}
+
+AvlTree PerfectAvlTree(int H)
+{
+  int lastNodeAssigned = 0;
+  return PerfectGenTree(H,&lastNodeAssigned);
+}

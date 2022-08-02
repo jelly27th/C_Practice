@@ -28,4 +28,9 @@ AvlTree AvlInsert(AvlTree T, AvlElementType element);
 AvlTree AvlPreorder(AvlTree T);
 AvlTree AvlInsertNoRecursion(AvlTree T, AvlElementType element);
 AvlTree AvlDelete(AvlTree T, AvlElementType element);
+AvlTree MinGenTree(int height, int* lastNode);
+AvlTree MinAvlTree(int H);
+AvlTree PerfectGenTree(int height, int* lastNode);
+AvlTree PerfectAvlTree(int H);
+
 #endif
