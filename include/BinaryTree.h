@@ -28,5 +28,6 @@ int CountLeaves(BinaryTree T);
 int CountFull(BinaryTree T);
 BinaryTree MakeBinaryRandomTree1(int lower,int upper);
 BinaryTree MakeBinaryRandomTree(int N);
+void BinaryPrintRange(ElementType Lower,ElementType Upper,BinaryTree T);
 
 #endif

@@ -194,12 +194,9 @@ BinaryTree MakeBinaryRandomTree1(int lower,int upper)
     if(T!= NULL)
     {
       T->data = RandomValue = RandInt(lower, upper);
-      printf("RandomValue = %d\n", RandomValue);
       T->left =  MakeBinaryRandomTree1(lower, RandomValue-1);
       T->right = MakeBinaryRandomTree1(RandomValue+1, upper);
     }
-    // else
-    //   FatalError("Out of space!");
   }
   return T;
 }
@@ -207,5 +204,18 @@ BinaryTree MakeBinaryRandomTree1(int lower,int upper)
 BinaryTree MakeBinaryRandomTree(int N)
 {
   return MakeBinaryRandomTree1(1, N);
+}
+
+void BinaryPrintRange(ElementType Lower,ElementType Upper,BinaryTree T)
+{
+  if(T!= NULL)
+  {
+    if(Lower<=T->data)
+      BinaryPrintRange(Lower,Upper,T->left);
+    if(Lower<=T->data&&T->data<=Upper)
+      printf("%d ",T->data);
+    if(T->data<=Upper)
+      BinaryPrintRange(Lower,Upper,T->right);
+  }
 }
 

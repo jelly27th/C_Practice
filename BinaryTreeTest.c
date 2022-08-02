@@ -12,6 +12,8 @@ int main(int argc, char **argv)
   // }
   // printf("the node = %d\nthe leacves = %d\nthe full = %d\n",CountNodes(T),CountLeaves(T),CountFull(T));
   T = MakeBinaryRandomTree(20);
+  BinaryPrintRange(8,16,T);
+  printf("\n");
   BinaryPreorder(T);
   T = BinaryMakeEmpty(T);
   return 0;
