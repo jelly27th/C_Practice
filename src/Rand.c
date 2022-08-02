@@ -9,3 +9,10 @@ bool Rand(unsigned int num)
   Sleep(1000);//delay 1S
   return rand() % num;//scope is 0~(num-1)
 }
+//generate the random number from lower and upper
+int RandInt(int lower, int upper)
+{
+  srand((unsigned)time(NULL));
+  Sleep(1000);//滞后1S
+  return rand() % upper+lower;
+}

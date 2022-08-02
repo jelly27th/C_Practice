@@ -6,7 +6,8 @@ aux_source_directory(src SRC_SUB)
 
 # set(SRC_CUR AvlTreeTest.c) # avltree test
 # set(SRC_CUR StackTest.c) # stack test
-set(SRC_CUR SplayTreeTest.c) # splaytree test
+# set(SRC_CUR SplayTreeTest.c) # splaytree test
+set(SRC_CUR BinaryTreeTest.c) # BinaryTree test
 
 add_executable(test ${SRC_SUB} ${SRC_CUR})
 include_directories(include)

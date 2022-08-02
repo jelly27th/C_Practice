@@ -4,5 +4,7 @@
 #include <stdbool.h>
 
 bool Rand(unsigned int num);
+int RandInt(int lower, int upper);
+
 
 #endif

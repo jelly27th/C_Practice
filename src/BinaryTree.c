@@ -17,40 +17,40 @@
 
 
 // init binarySearchTree and create a empty tree
-BinaryTree MakeEmpty(BinaryTree T)
+BinaryTree BinaryMakeEmpty(BinaryTree T)
 {
     if(T!= NULL)
     {
-        MakeEmpty(T->left);
-        MakeEmpty(T->right);
+        BinaryMakeEmpty(T->left);
+        BinaryMakeEmpty(T->right);
         free(T);
     }
     return NULL;
 }
 // find element in the tree and return position
-Position Find(BinaryTree T, ElementType element)
+Position BinaryFind(BinaryTree T, ElementType element)
 {
     if(T==NULL)//when the point is null
       return NULL;
     else if(element<T->data)//if the element less than the data,go left
-      return Find(T->left, element);
+      return BinaryFind(T->left, element);
     else if(element>T->data)//if the element more than the data,go right
-      return Find(T->right, element);
+      return BinaryFind(T->right, element);
     else//if find the element
       return T;
 }
 // find the minimum element in the tree and return position
-Position FindMin(BinaryTree T)
+Position BinaryFindMin(BinaryTree T)
 {
     if(T==NULL)//when the point is null
       return NULL;
     else if(T->left==NULL)//if find the minimum element
        return T;
     else //if not find the minimum element,go left
-      return FindMin(T->left);
+      return BinaryFindMin(T->left);
 }
 // find the maximun element in the tree and return position
-Position FindMax(BinaryTree T)
+Position BinaryFindMax(BinaryTree T)
 {
     if(T==NULL)//when the point is null
       return NULL;
@@ -61,7 +61,7 @@ Position FindMax(BinaryTree T)
     return T;
 }
 // insert element at the tree 
-BinaryTree Insert(BinaryTree T,ElementType element)
+BinaryTree BinaryInsert(BinaryTree T,ElementType element)
 {
     if(T==NULL)//when the point is null
     {
@@ -71,26 +71,26 @@ BinaryTree Insert(BinaryTree T,ElementType element)
         (T)->left = (T)->right = NULL;
     }
     else if((T)->data>element)//if the element less than the data,go left insert the element
-      (T)->left = Insert((T)->left,element);
+      (T)->left = BinaryInsert((T)->left,element);
     else if((T)->data<element)//if the element is greater than the data,go right insert the element
-      (T)->right = Insert((T)->right,element);
+      (T)->right = BinaryInsert((T)->right,element);
     return T;//insert completed successfully
 }
 // find the element at the tree and delete it(replace it with a right subtree minimum)
-BinaryTree DeleteRight(BinaryTree T,ElementType element)
+BinaryTree BinaryDeleteRight(BinaryTree T,ElementType element)
 {
     Position temp = NULL;
     if(T==NULL)//when the point is null
       return NULL;
     else if(element<T->data)//go left
-      T->left =  DeleteRight(T->left, element);
+      T->left =  BinaryDeleteRight(T->left, element);
     else if(element>T->data)//go Right
-      T->right =  DeleteRight(T->right, element);
+      T->right =  BinaryDeleteRight(T->right, element);
     else if(T->right&&T->left)//have two children
     {
-        temp = FindMin(T->right);
+        temp = BinaryFindMin(T->right);
         T->data = temp->data;
-        T->right =  DeleteRight(T->right,temp->data);
+        T->right =  BinaryDeleteRight(T->right,temp->data);
     }
     else //have one or zero children
     {
@@ -102,31 +102,31 @@ BinaryTree DeleteRight(BinaryTree T,ElementType element)
     return T;
 }
 // Preorder traversal of binary search tree
-BinaryTree Preorder(BinaryTree T)
+BinaryTree BinaryPreorder(BinaryTree T)
 {
   if(T!= NULL)
     printf("%d ",T->data);
   else 
     return T;
-  Preorder(T->left);
-  Preorder(T->right);
+  BinaryPreorder(T->left);
+  BinaryPreorder(T->right);
   return T;
 }
 // find the element at the tree and delete it(replace it with a left subtree maximun)
-BinaryTree DeleteLeft(BinaryTree T,ElementType element)
+BinaryTree BinaryDeleteLeft(BinaryTree T,ElementType element)
 {
   Position temp =  NULL;
   if(T==NULL)
     return NULL;
   else if(element<T->data)
-    T->left = DeleteLeft(T->left, element);
+    T->left = BinaryDeleteLeft(T->left, element);
   else if(element>T->data)
-    T->right = DeleteLeft(T->right, element);
+    T->right = BinaryDeleteLeft(T->right, element);
   else if(T->left&&T->right)//have two children
   {
-    temp = FindMax(T->left);
+    temp = BinaryFindMax(T->left);
     T->data = temp->data;
-    T->left = DeleteLeft(T->left, temp->data);
+    T->left = BinaryDeleteLeft(T->left, temp->data);
   }
   else //have one or zero children
   {
@@ -138,22 +138,22 @@ BinaryTree DeleteLeft(BinaryTree T,ElementType element)
   return T;
 }
 // alternately use DeleteLeft() and DeleteRight() to delete element
-void AlternateDelete(BinaryTree T, ElementType element)
+void BinaryAlternateDelete(BinaryTree T, ElementType element)
 {
   static bool flag = true;
-  if(flag) DeleteLeft(T, element);
-  else DeleteRight(T, element);
+  if(flag) BinaryDeleteLeft(T, element);
+  else BinaryDeleteRight(T, element);
   flag = !flag;
 }
 
 // random use DeleteLeft() and DeleteRight() to delete element
-void RandomDelete(BinaryTree T, ElementType element)
+void BinaryRandomDelete(BinaryTree T, ElementType element)
 {
   static bool flag = true;
   flag = Rand(2);
   printf("%d\n",flag);
-  if(flag==true) DeleteLeft(T, element);
-  else DeleteRight(T, element);
+  if(flag==true) BinaryDeleteLeft(T, element);
+  else BinaryDeleteRight(T, element);
 }
 //Calculate the number of nodes
 int CountNodes(BinaryTree T)
