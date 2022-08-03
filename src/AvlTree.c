@@ -432,3 +432,24 @@ AvlTree PerfectAvlTree(int H)
   int lastNodeAssigned = 0;
   return PerfectGenTree(H,&lastNodeAssigned);
 }
+
+// This is actually an in-order traversal program, theoretically applicable to all kinds of trees
+// The main use is to print trees
+void AvlPrintTree(AvlTree T)
+{
+  if(T!= NULL)
+  {
+    AvlPrintTree(T->left);
+    printf("%d ",T->data);
+    AvlPrintTree(T->right);
+  }
+}
+// This is actually a post-order traversal procedure, theoretically applicable to all kinds of trees
+// The main use is to calculate the height of each node
+int AvlHeight(AvlTree T)
+{
+  if(T == NULL)
+    return NULL;
+  else 
+    return 1 + MAX(AvlHeight(T->left),AvlHeight(T->right));
+}

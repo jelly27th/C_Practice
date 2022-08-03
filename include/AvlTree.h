@@ -25,12 +25,14 @@ static Position SingleRoateRight(Position K1);
 static Position DoubleRoateLeft(Position K3);
 static Position DoubleRoateRight(Position K1);
 AvlTree AvlInsert(AvlTree T, AvlElementType element);
-AvlTree AvlPreorder(AvlTree T);
 AvlTree AvlInsertNoRecursion(AvlTree T, AvlElementType element);
 AvlTree AvlDelete(AvlTree T, AvlElementType element);
 AvlTree MinGenTree(int height, int* lastNode);
 AvlTree MinAvlTree(int H);
 AvlTree PerfectGenTree(int height, int* lastNode);
 AvlTree PerfectAvlTree(int H);
+AvlTree AvlPreorder(AvlTree T);
+void AvlPrintTree(AvlTree T);
+int AvlHeight(AvlTree T);
 
 #endif
