@@ -449,7 +449,7 @@ void AvlPrintTree(AvlTree T)
 int AvlHeight(AvlTree T)
 {
   if(T == NULL)
-    return NULL;
+    return -1;
   else 
     return 1 + MAX(AvlHeight(T->left),AvlHeight(T->right));
 }

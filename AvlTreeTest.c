@@ -28,7 +28,9 @@ int main(int argc, char **argv)
   // printf("%d %d\n",AvlFindMax(T)->data,AvlFindMax(T)->height);
   // T = MinAvlTree(3);
   T = PerfectAvlTree(3);
-  AvlPreorder(T);
+  // AvlPreorder(T);
+  AvlPrintTree(T);
+  printf("\n%d\n",AvlHeight);
   T = AvlMakeEmpty(T);
   // printf("%p\n",T);
   // system("chcp 65001");
