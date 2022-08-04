@@ -453,3 +453,37 @@ int AvlHeight(AvlTree T)
   else 
     return 1 + MAX(AvlHeight(T->left),AvlHeight(T->right));
 }
+
+void AvlCalcX(AvlTree T, int* LastX)
+{
+  if(T!= NULL)
+  {
+    AvlCalcX(T->left,LastX);
+    T->x = (++(*LastX));
+    AvlCalcX(T->right,LastX);
+  }
+}
+void AvlCalcY(AvlTree T, int TreeHeight)
+{
+  if(T!= NULL)
+  {
+    T->y = TreeHeight - T->height;
+    AvlCalcY(T->left,TreeHeight);
+    AvlCalcY(T->right,TreeHeight);
+  }
+}
+void AvlCalcCoordinates(AvlTree T)
+{
+  int x = 0;
+  AvlCalcX(T, &x);
+  AvlCalcY(T,T->height);
+}
+void AvlDir(AvlTree T)
+{
+  if(T!= NULL)
+  {
+    printf("%d  x:%d  y:%d\n",T->data,T->x,T->y);
+    AvlDir(T->left);  
+    AvlDir(T->right);
+  }
+}

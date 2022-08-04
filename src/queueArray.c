@@ -1,6 +1,7 @@
 #include "queueArray.h"
 #include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 // create a queue of a array
 Queue EmptyQueue(int MaxQueueSize)
@@ -9,13 +10,13 @@ Queue EmptyQueue(int MaxQueueSize)
     // queue->Array = malloc(sizeof(ElementType)*(MaxQueueSize+1));
     queue->Array = malloc(sizeof(ElementType)*(MaxQueueSize));
     queue->Capacity = MaxQueueSize;
-    MakeEmpty(queue);
+    QueueMakeEmpty(queue);
     return queue;
 }
 // insert an element from the queue of a array
 bool Enqueue(Queue queue,ElementType element)
 {
-    if(IsFull(queue)) 
+    if(QueueIsFull(queue)) 
     {
         printf("the queue is already empty\n");
         return false;
@@ -31,7 +32,7 @@ bool Enqueue(Queue queue,ElementType element)
 // out an element from the queue of a array
 bool Dequeue(Queue queue)
 {
-    if(IsEmpty(queue))
+    if(QueueIsEmpty(queue))
     {
         printf("the queue is already empty\n");
         return false;
@@ -44,22 +45,22 @@ bool Dequeue(Queue queue)
     return true;
 }
 // display the front element of the queue
-ElementType Front(Queue queue)
+ElementType QueueFront(Queue queue)
 {
     return queue->Array[queue->front];
 }
 // check if the queue is empty
-bool IsEmpty(Queue queue)
+bool QueueIsEmpty(Queue queue)
 {
     return queue->size==0;
 }
 // check if the queue is full
-bool IsFull(Queue queue)
+bool QueueIsFull(Queue queue)
 {
     return queue->size==queue->Capacity;
 }
 // empty the queue
-void MakeEmpty(Queue queue)
+void QueueMakeEmpty(Queue queue)
 {
     queue->front = FrontInit;
     queue->rear = RearInit;

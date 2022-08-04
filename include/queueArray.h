@@ -18,10 +18,10 @@ struct _queue{
 Queue EmptyQueue(int MaxQueueSize);
 bool Enqueue(Queue queue,ElementType element);
 bool Dequeue(Queue queue);
-ElementType Front(Queue queue);
-bool IsEmpty(Queue queue);
-bool IsFull(Queue queue);
-void MakeEmpty(Queue queue);
+ElementType QueueFront(Queue queue);
+bool QueueIsEmpty(Queue queue);
+bool QueueIsFull(Queue queue);
+void QueueMakeEmpty(Queue queue);
 void ClearQueue(Queue queue);
 
 #endif
