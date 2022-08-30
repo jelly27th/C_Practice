@@ -487,3 +487,31 @@ void AvlDir(AvlTree T)
     AvlDir(T->right);
   }
 }
+
+// 打印二叉树:   type : 0表示根节点，１表示左节点，２表示右节点. level表示层次，用于控制显示的距离
+void printTree2(AvlTree n, int type,  int level)
+{
+	int i;
+
+	if (NULL == n)
+		return;
+
+	printTree2(n->right, 2, level+1);
+	switch (type)
+	{
+	case 0:
+		printf("%2d\n", n->data);
+		break;
+	case 1:
+		for (i = 0; i < level; i++)	
+			printf("\t");
+		printf("\\ %2d\n", n->data);
+		break;
+	case 2:
+		for (i = 0; i < level; i++)	
+			printf("\t");
+		printf("/ %2d\n", n->data);
+		break;	
+	}
+	printTree2(n->left, 1,  level+1);
+}

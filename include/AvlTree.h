@@ -45,5 +45,7 @@ void AvlDir(AvlTree T);
 
 void AvlPrintTree(AvlTree T);
 int AvlHeight(AvlTree T);
+void printTree2(AvlTree n, int type,  int level);
+
 
 #endif
