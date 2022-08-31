@@ -30,10 +30,6 @@ int main(int argc, char **argv)
   // T = PerfectAvlTree(3);
   // AvlPreorder(T);
 
-  // AvlPrintTree(T);
-  // printf("\n%d\n",AvlHeight);
-  // AvlCalcCoordinates(T);
-  // AvlDir(T);
   printTree2(T,0,0);
 
   T = AvlMakeEmpty(T);

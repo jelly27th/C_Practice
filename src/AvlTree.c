@@ -454,39 +454,6 @@ int AvlHeight(AvlTree T)
     return 1 + MAX(AvlHeight(T->left),AvlHeight(T->right));
 }
 
-void AvlCalcX(AvlTree T, int* LastX)
-{
-  if(T!= NULL)
-  {
-    AvlCalcX(T->left,LastX);
-    T->x = (++(*LastX));
-    AvlCalcX(T->right,LastX);
-  }
-}
-void AvlCalcY(AvlTree T, int TreeHeight)
-{
-  if(T!= NULL)
-  {
-    T->y = TreeHeight - T->height;
-    AvlCalcY(T->left,TreeHeight);
-    AvlCalcY(T->right,TreeHeight);
-  }
-}
-void AvlCalcCoordinates(AvlTree T)
-{
-  int x = 0;
-  AvlCalcX(T, &x);
-  AvlCalcY(T,T->height);
-}
-void AvlDir(AvlTree T)
-{
-  if(T!= NULL)
-  {
-    printf("%d  x:%d  y:%d\n",T->data,T->x,T->y);
-    AvlDir(T->left);  
-    AvlDir(T->right);
-  }
-}
 
 // 打印二叉树:   type : 0表示根节点，１表示左节点，２表示右节点. level表示层次，用于控制显示的距离
 void printTree2(AvlTree n, int type,  int level)
