@@ -13,6 +13,9 @@ struct _AvlNode{
     int height;
     AvlTree left;
     AvlTree right;
+
+    int x;
+    int y;
 };
 
 AvlTree AvlMakeEmpty(AvlTree T);
@@ -32,10 +35,12 @@ AvlTree MinAvlTree(int H);
 AvlTree PerfectGenTree(int height, int* lastNode);
 AvlTree PerfectAvlTree(int H);
 AvlTree AvlPreorder(AvlTree T);
-
-
 void AvlPrintTree(AvlTree T);
 int AvlHeight(AvlTree T);
+void calcX(AvlTree T,int *LastX);
+void calcY(AvlTree T);
+void Coordinates(AvlTree T);
+
 void printTree2(AvlTree n, int type,  int level);
 
 

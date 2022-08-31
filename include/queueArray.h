@@ -1,10 +1,19 @@
 #ifndef _QUEUEARRAY_H
 #define _QUEUEARRAY_H
 #include <stdbool.h>
+#include "AvlTree.h"
 
 #define FrontInit 0;
 #define RearInit 0;
-typedef int ElementType;
+/*
+default
+*/
+// typedef int ElementType;
+/*
+exercise 4.33
+*/
+typedef AvlTree ElementType;
+
 typedef struct _queue queue;
 typedef queue* Queue; 
 

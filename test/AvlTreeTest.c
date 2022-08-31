@@ -28,9 +28,11 @@ int main(int argc, char **argv)
   // printf("%d %d\n",AvlFindMax(T)->data,AvlFindMax(T)->height);
   T = MinAvlTree(3);
   // T = PerfectAvlTree(3);
-  // AvlPreorder(T);
+ 
+  Coordinates(T);
+  AvlPreorder(T);
 
-  printTree2(T,0,0);
+  // printTree2(T,0,0);
 
   T = AvlMakeEmpty(T);
   // printf("%p\n",T);

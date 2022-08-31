@@ -10,6 +10,7 @@
  */
 #include "AvlTree.h"
 #include "Stack.h"
+#include "queueArray.h"
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -182,6 +183,8 @@ AvlTree AvlPreorder(AvlTree T)
   else
   {
     printf("%d ",T->data);
+    // printf("%d ",T->x);
+    // printf("%d\n",T->y);
     AvlPreorder(T->left);
     AvlPreorder(T->right);
   }
@@ -481,4 +484,56 @@ void printTree2(AvlTree n, int type,  int level)
 		break;	
 	}
 	printTree2(n->left, 1,  level+1);
+}
+// Calculate binary tree X coordinate using inorder traversal
+void calcX(AvlTree T,int *LastX)
+{
+  if(T!=NULL)
+  {
+    calcX(T->left,LastX);
+    T->x = ++(*LastX);
+    calcX(T->right,LastX);
+  }
+}
+/*
+Calculate binary tree Y coordinate using level-order traversal.
+If you need to use this function, you need to change 
+typedef int ElementType to typedef AvlTree ElementType in queueArrary.h
+*/
+void calcY(AvlTree T)
+{
+  Queue queue = EmptyQueue(10);
+
+  Enqueue(queue,T);
+  int depth = T->height, count = 1, nextcount = 0;
+  
+  while(!QueueIsEmpty(queue))
+  {
+    for(int i = 0; i < count; i++)
+    {
+      AvlTree temp =  QueueFront(queue);
+      if(temp->left!= NULL)
+      {
+        Enqueue(queue,temp->left);
+        nextcount++;
+      }
+      if(temp->right!= NULL)
+      {
+        Enqueue(queue,temp->right);
+        nextcount++;
+      }
+      temp->y = depth;
+      Dequeue(queue);
+    }
+    depth--;
+    count = nextcount;
+    nextcount = 0;
+  }
+}
+// Calculate X and Y coordinates
+void Coordinates(AvlTree T)
+{
+  int i = 0;
+  calcX(T,&i);
+  calcY(T);
 }
