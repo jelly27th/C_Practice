@@ -404,7 +404,7 @@ AvlTree MinGenTree(int height, int* lastNode)
   else
     return NULL;
 }
-
+// Generate minimal AVL tree
 AvlTree MinAvlTree(int H)
 {
   int lastNodeAssigned = 0;
@@ -429,7 +429,7 @@ AvlTree PerfectGenTree(int height, int* lastNode)
   else
     return NULL;
 }
-
+// Generate perfect AVL tree
 AvlTree PerfectAvlTree(int H)
 {
   int lastNodeAssigned = 0;

@@ -157,7 +157,9 @@ void BTreeDisplay(BTree T, int N)
 {
     int i = 0,all = 0;
 
-    /* Output all keywords of the nodes of this layer, different nodes are separated by " ", and each layer is separated by "$$" */
+    /* Output all keywords of the nodes of this layer, 
+    different nodes are separated by " ", 
+    and each layer is separated by "$$" */
     for(i = 0; i < N; i++)
     {
         for(int j = 0; j < (T+i)->KeyNum; j++)
@@ -181,4 +183,38 @@ void BTreeDisplay(BTree T, int N)
         }
         BTreeDisplay(Nodes, all);
     }
+}
+// Returns the node with the smallest key of the root node tree,
+//  and the position of the key must be 0
+BTree BTreeFindMin(BTree T)
+{
+    if(T->KeyNum < 1)
+    {
+        printf("FindMin failed\n");
+        return NULL;
+    }
+
+    if(T->IsLeaf)
+      return T;
+    else 
+      T = BTreeFindMin(T->Child[01]);
+
+    return T;  
+}
+// Returns the node with the largest key of the root node tree, 
+// the position of the key must be the n-1 value of the node
+BTree BTreeFindMax(BTree T)
+{
+    if(T->KeyNum < 1)
+    {
+        printf("FindMax failed\n");
+        return NULL;
+    }
+
+    if(T->IsLeaf)
+      return T;
+    else
+      T = BTreeFindMax(T->Child[T->KeyNum - 1]);
+
+    return T;
 }
