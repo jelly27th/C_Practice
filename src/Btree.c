@@ -146,3 +146,39 @@ void BTreeSplit(BTree T, int Position)
     T->Keywords[Position] = Child->Keywords[MIN_T-1];
     T->KeyNum = T->KeyNum + 1;
 }
+/*
+* In order to verify that the insertion and deletion results are correct, add an output function
+* Output all keywords of the subtree with parent as the parent node
+* Here all the nodes of the same layer are put into an array for easy output
+* The first parameter node_first is used as the starting address of each layer of node array
+* n is the number of nodes in this layer
+*/
+void BTreeDisplay(BTree T, int N)
+{
+    int i = 0,all = 0;
+
+    /* Output all keywords of the nodes of this layer, different nodes are separated by " ", and each layer is separated by "$$" */
+    for(i = 0; i < N; i++)
+    {
+        for(int j = 0; j < (T+i)->KeyNum; j++)
+          printf("%d ",(T+i)->Keywords[j]);
+        all += (T+i)->KeyNum + 1;
+        printf(" ");
+    }
+    printf("$$\n");
+
+    if(!T->IsLeaf)
+    {
+        BTree Nodes[all];
+        i = 0;
+        for(int j = 0; j < N; j++)
+        {
+            for(int k = 0; k < (T+i)->KeyNum; k++)
+            {
+                Nodes[i] = (T+i)->Child[k];
+                i++;
+            }
+        }
+        BTreeDisplay(Nodes, all);
+    }
+}
