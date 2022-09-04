@@ -4,6 +4,7 @@
 
 #define MIN_T 3
 #define MAX_T (MIN_T * 2)
+typedef int KeyPosition; 
 typedef int BtreeKeyType;
 typedef struct _BTreeNode BTreeNode;
 typedef BTreeNode* BTree; 
@@ -17,14 +18,19 @@ struct _BTreeNode {
     BTree Child[MAX_T]; //store child nodes.
 };
 
-BTree BTreeCreate(); 
-int BTreeSearch(BTree T, BtreeKeyType Keywords);
+KeyPosition BTreeSearch(BTree T, BtreeKeyType Keywords);
 void BTreeTraverse(BTree T);
-void BTreeSplit(BTree X, int Position);
+void BTreeSplit(BTree X, KeyPosition N);
 void BTreeInsertNotFull(BTree T, BtreeKeyType Keywords);
 BTree BTreeInsert(BTree T, BtreeKeyType Keywords);
-void BTreeDisplay(BTree T, int N);
-BTree BTreeFindMin(BTree T);
-BTree BTreeFindMax(BTree T);
+// void BTreeDisplay(BTree T, int N);
+BtreePosition BTreeFindMin(BTree T);
+BtreePosition BTreeFindMax(BTree T);
+void BTreeDeleteLeaf(BTree T, KeyPosition N);
+KeyPosition BtreeDeleteNotLeaf(BTree T, KeyPosition N);
+KeyPosition BTreeMerage(BTree Parent,KeyPosition N);
+void BTreeDelete(BTree T, BtreeKeyType Keywords);
+void BTreeBorrowPrev(BTree X, KeyPosition Position);
+void BTreeBorrowNext(BTree X, KeyPosition Position);
 
 #endif
