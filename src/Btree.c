@@ -8,10 +8,10 @@
  * @copyright Copyright (c) 2022
  * 
  */
-#include "Btree.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include "Btree.h"
 
 /*
 * Find the keyword position in the tree rooted at node
@@ -51,7 +51,7 @@ void BTreeTraverse(BTree T)
         printf("%d ",T->Keywords[i]);
     }
     // Print the subtree rooted with last child
-    if(T->IsLeaf==false) BTreeTraverse(T->Child[T->KeyNum+1]);
+    if(T->IsLeaf==false) BTreeTraverse(T->Child[T->KeyNum]);
 }
 /*
 * Insert keywords for the entire tree
@@ -118,7 +118,7 @@ void BTreeInsertNotFull(BTree T, BtreeKeyType Keywords)
 			T->Keywords[i+1] = T->Keywords[i];
 			i--;
 		}
-		T->Keywords[i+1] = T->Keywords[i];
+		T->Keywords[i+1] = Keywords;
 		T->KeyNum++;
 	}
 	else
@@ -170,7 +170,7 @@ void BTreeSplit(BTree X, KeyPosition N)
 
     /* Copy the (Min_T-1) keywords after the child node Y to the new node Z, 
     and change the number of keywords  of the child node Y */
-    for(int i = 0; i < MIN_T-2; i++)
+    for(int i = 0; i < MIN_T-1; i++)
     {
         Z->Keywords[i] = Y->Keywords[i+MIN_T];
     }
@@ -197,44 +197,6 @@ void BTreeSplit(BTree X, KeyPosition N)
     X->Keywords[N] = Y->Keywords[MIN_T-1];
     X->KeyNum = X->KeyNum + 1;
 }
-/*
-* In order to verify that the insertion and deletion results are correct, add an output function
-* Output all keywords of the subtree with parent as the parent node
-* Here all the nodes of the same layer are put into an array for easy output
-* The first parameter node_first is used as the starting address of each layer of node array
-* n is the number of nodes in this layer
-*/
-// void BTreeDisplay(BTree T, int N)
-// {
-//     int i = 0,all = 0;
-
-//     /* Output all keywords of the nodes of this layer, 
-//     different nodes are separated by " ", 
-//     and each layer is separated by "$$" */
-//     for(i = 0; i < N; i++)
-//     {
-//         for(int j = 0; j < (T+i)->KeyNum; j++)
-//           printf("%d ",(T+i)->Keywords[j]);
-//         all += (T+i)->KeyNum + 1;
-//         printf(" ");
-//     }
-//     printf("$$\n");
-
-//     if(!T->IsLeaf)
-//     {
-//         BTree Nodes[all];
-//         i = 0;
-//         for(int j = 0; j < N; j++)
-//         {
-//             for(int k = 0; k < (T+i)->KeyNum; k++)
-//             {
-//                 Nodes[i] = (T+i)->Child[k];
-//                 i++;
-//             }
-//         }
-//         BTreeDisplay(Nodes, all);
-//     }
-// }
 // Returns the node with the smallest key of the root node tree,
 //  and the position of the key must be 0
 BtreePosition BTreeFindMin(BTree T)
@@ -337,10 +299,10 @@ KeyPosition BTreeMerage(BTree Parent,KeyPosition N)
     and all the keywords of the right sibling to the node, 
     and modify the n value of the left child */
     Left->Keywords[Left->KeyNum] = Parent->Keywords[N];
-    for(int i = 0; i < Left->KeyNum; i++)
+    for(int i = 0; i < Right->KeyNum; i++)
     {
         Left->Keywords[MIN_T+i] = Right->Keywords[i];
-        Left->KeyNum++;
+     /*   Left->KeyNum++;*/
     }
 
     /* If there is a child node, also copy to this node */
@@ -350,8 +312,8 @@ KeyPosition BTreeMerage(BTree Parent,KeyPosition N)
           Left->Child[MIN_T+i] = Right->Child[i];
     }
 
+    Left->KeyNum += Right->KeyNum+1;
     Right->KeyNum = 0;
-    Left->KeyNum = MAX_T-1;
 
     /* Change the corresponding keyword and child node position of the parent node */
     for(int i = N; i < Parent->KeyNum-1; i++)
@@ -404,10 +366,10 @@ void BTreeDelete(BTree T, BtreeKeyType Keywords)
             {
                 if(i>0 && T->Child[i-1]->KeyNum >= MIN_T)
                   BTreeBorrowPrev(T,i);
-                else if(i>0 && T->Child[i+1] >=MIN_T)
+                else if(i>0 && T->Child[i+1]->KeyNum >=MIN_T)
                   BTreeBorrowNext(T,i);
                 else
-                  i = BTreeMeraged(T,i); 
+                  i = BTreeMerage(T,i); 
                 
                 BTreeDelete(T,Keywords);
             }
@@ -432,8 +394,8 @@ void BTreeBorrowPrev(BTree X, KeyPosition Position)
     for(int i = Z->KeyNum-1; i >= 0; i--)
       Z->Keywords[i+1] = Z->Keywords[i];
     
-    Z->Keywords[0] = X->Keywords[Position];
-    X->Keywords[Position] = Y->Keywords[Position-1];
+    Z->Keywords[0] = X->Keywords[Position-1];
+    X->Keywords[Position-1] = Y->Keywords[Y->KeyNum-1];
 
     if(Z->IsLeaf==false)
     {
@@ -463,8 +425,8 @@ void BTreeBorrowNext(BTree X, KeyPosition Position)
     Y->Keywords[Y->KeyNum] = X->Keywords[Position];
     X->Keywords[Position] = Z->Keywords[0];
 
-    for(int i= 0; i<Z->KeyNum-2; i++)
-      Z->Keywords[i] = X->Keywords[i+1];
+    for(int i= 0; i<Z->KeyNum-1; i++)
+      Z->Keywords[i] = Z->Keywords[i+1];
 
     if(Z->IsLeaf==false)
     {

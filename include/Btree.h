@@ -23,7 +23,6 @@ void BTreeTraverse(BTree T);
 void BTreeSplit(BTree X, KeyPosition N);
 void BTreeInsertNotFull(BTree T, BtreeKeyType Keywords);
 BTree BTreeInsert(BTree T, BtreeKeyType Keywords);
-// void BTreeDisplay(BTree T, int N);
 BtreePosition BTreeFindMin(BTree T);
 BtreePosition BTreeFindMax(BTree T);
 void BTreeDeleteLeaf(BTree T, KeyPosition N);

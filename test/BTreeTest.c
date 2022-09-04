@@ -12,9 +12,9 @@ int main(int argc, char **argv)
     }
 
     BTreeTraverse(T);
-    BTreeDelete(T,20);
-    BTreeTraverse(T);
-    BTreeDelete(T,10);
+    //BTreeDelete(T,90);
+    //BTreeDelete(T, 50);
+    BTreeDelete(T, 30);
     BTreeTraverse(T);
 
     return 0;
