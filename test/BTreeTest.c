@@ -16,6 +16,7 @@ int main(int argc, char **argv)
     //BTreeDelete(T, 50);
     BTreeDelete(T, 30);
     BTreeTraverse(T);
+    BTreeDestroy(T);
 
     return 0;
 }

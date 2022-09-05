@@ -218,4 +218,12 @@ void BinaryPrintRange(ElementType Lower,ElementType Upper,BinaryTree T)
       BinaryPrintRange(Lower,Upper,T->right);
   }
 }
+// Exercise 4.41
+// Compare if two binary trees are similar
+bool BinarySimilar(BinaryTree T1,BinaryTree T2)
+{
+  if(T1==NULL||T2==NULL)
+   return T1==NULL&&T2==NULL;
 
+  return BinarySimilar(T1->left,T2->left)&&BinarySimilar(T1->right,T2->right);
+}

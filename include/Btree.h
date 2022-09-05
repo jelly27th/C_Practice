@@ -31,5 +31,6 @@ KeyPosition BTreeMerage(BTree Parent,KeyPosition N);
 void BTreeDelete(BTree T, BtreeKeyType Keywords);
 void BTreeBorrowPrev(BTree X, KeyPosition Position);
 void BTreeBorrowNext(BTree X, KeyPosition Position);
+void BTreeDestroy(BTree T);
 
 #endif

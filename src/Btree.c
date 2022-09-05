@@ -438,3 +438,18 @@ void BTreeBorrowNext(BTree X, KeyPosition Position)
     Y->KeyNum++;
     Z->KeyNum--;
 }
+// destory the B tree
+void BTreeDestroy(BTree T)
+{
+    if(T->IsLeaf==false)
+    {
+        for(int i = 0; i <= T->KeyNum; i++)
+        {
+            if(T->Child[i]->IsLeaf==false)
+             BTreeDestroy(T->Child[i]);
+
+            free(T->Child[i]);
+        }
+    }
+    free(T);
+}
