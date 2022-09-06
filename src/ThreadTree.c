@@ -1,6 +1,7 @@
 #include "ThreadTree.h"
 #include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 // find the most left node in T node
 ThreadTree ThreadTreeFindLeftMost(ThreadTree T)
@@ -12,65 +13,67 @@ ThreadTree ThreadTreeFindLeftMost(ThreadTree T)
     return T;  
 }
 // Non-recursive inorder traversal prints the thread tree
-void ThreadTreeInorder(ThreadTree T)
+void ThreadTreeInorder(ThreadTree root)
 {
-    ThreadTree T = ThreadTreeFindLeftMost(T);
+    ThreadTree cur = ThreadTreeFindLeftMost(root);
 
-    while(T!= NULL)
+    while(cur!= NULL)
     {
-        printf("%d ",T->Data);
+        printf("%d ",cur->Data);
 
-        if (T->RightThread==true)
-          T = T->Right;
+        if (cur->RightThread==true)
+          cur = cur->Right;
         else
-          T = ThreadTreeFindLeftMost(T->Right);
+          cur = ThreadTreeFindLeftMost(cur->Right);
     }
 }
 
 ThreadTree ThreadTreeInsert(ThreadTree root,ThreadTreeDataType Data)
 {
-  if(root == NULL)
+  ThreadTree ptr = root;
+  ThreadTree par = NULL;
+
+  while(ptr!=NULL)
   {
-    root = malloc(sizeof(ThreadTreeNode));
-    root->Data = Data;
-    root->Left = root->Right = root;
-    root->LeftThread = root->RightThread = true;
+    if(Data==ptr->Data)
+    {
+      printf("Data has already been inserted\n");
+      return root;
+    }
+
+    par = ptr;
+
+    if(Data < ptr->Data && ptr->LeftThread ==false)
+     ptr = ptr->Left;
+    else if(Data > ptr->Data && ptr->RightThread ==false)
+     ptr = ptr->Right;
+    else
+      break;
+  }
+  ThreadTree temp = malloc(sizeof(ThreadTreeNode));
+  temp->Data = Data;
+  temp->LeftThread = temp->RightThread = true;
+
+  if(par == NULL)
+  {
+    root = temp;
+    temp->Left = temp->Right = NULL;
+  }
+  else if(Data < par->Data)
+  {
+    temp->Left = par->Left;
+    temp->Right = par;
+    par->LeftThread = false;
+    par->Left = temp;
   }
   else
   {
-    ThreadTree T = root;
-    ThreadTree P = malloc(sizeof(ThreadTreeNode));
-    P->Data = Data;
-    P->LeftThread = P->RightThread = true;
-    while(1)
-    {
-      if(T->Data > Data && T->LeftThread == true)
-      {
-        P->Left = T->Left;
-        P->Right = T;
-
-        T->Left = P;
-        T->LeftThread = false;
-
-        break;
-      }
-      else
-       T = T->Right;
-      
-      if(T->Data < Data && T->RightThread ==true)
-      {
-        P->Left = T;
-        P->Right = T->Right;
-
-        T->Right = P;
-        T->RightThread = false;
-
-        break;
-      }
-      else
-       T = T->Left;
-    }
+    temp->Left = par;
+    temp->Right = par->Right;
+    par->RightThread = false;
+    par->Right = temp;
   }
+
   return root;
 }
 // find the element at the tree and delete it(replace it with a right subtree minimum)
@@ -82,7 +85,7 @@ ThreadTree ThreadTreeDelete(ThreadTree root,ThreadTreeDataType Data)
   bool found = false;
 
   // The while loop traverses to find the Data location
-  while (ptr->LeftThread && ptr->RightThread)
+  while (ptr!= NULL)
   {
     if(Data == ptr->Data)
     {
@@ -90,16 +93,12 @@ ThreadTree ThreadTreeDelete(ThreadTree root,ThreadTreeDataType Data)
       break;
     }
     par = ptr;
-    if(Data < ptr->Data)
-    {
-      if(ptr->LeftThread == false) ptr = ptr->Left;
-      else break;
-    }
+    if(Data < ptr->Data&&ptr->LeftThread == false) 
+      ptr = ptr->Left;
+    else if(Data > ptr->Data && ptr->RightThread == false) 
+      ptr = ptr->Right;
     else
-    {
-      if(ptr->RightThread == false) ptr = ptr->Right;
-      else break;
-    }
+      break;
   }
 
   if(!found)
@@ -123,7 +122,7 @@ ThreadTree ThreadTreeDelete(ThreadTree root,ThreadTreeDataType Data)
 ThreadTree ThreadTreeDeleteLeaf(ThreadTree root,ThreadTree parent,ThreadTree T)
 {
   if(parent==NULL)
-   root == NULL;
+   root = NULL;
   else if(T == parent->Left)
   {
     parent->LeftThread = true;
@@ -144,13 +143,13 @@ ThreadTree ThreadTreeDeleteOneChildren(ThreadTree root,ThreadTree parent,ThreadT
   ThreadTree child;
 
   if(T->LeftThread == false) child = T->Left;
-  else if(T->RightThread == false) child = T->Right;
+  else child = T->Right;
 
   if(parent == NULL) root = child;
   // left children
   else if(T == parent->Left) parent->Left = child;
   // right children
-  else if(T == parent->Right) parent->Right = child;
+  else parent->Right = child;
 
   // find successor and predecessor
   ThreadTree succ = ThreadTreeFindSucc(T);
@@ -163,14 +162,14 @@ ThreadTree ThreadTreeDeleteOneChildren(ThreadTree root,ThreadTree parent,ThreadT
   return root; 
 }
 
-ThreadTree ThreadTreeDeleteOneChildren(ThreadTree root,ThreadTree parent,ThreadTree T)
+ThreadTree ThreadTreeDeleteTwoChildren(ThreadTree root,ThreadTree parent,ThreadTree T)
 {
   // find inorder successor and its parent
   ThreadTree parsucc = T;
   ThreadTree succ = T->Right;
 
   // find leftmost child of successor
-  while(succ->Left == false)
+  while(succ->LeftThread == false)
   {
     parsucc = succ;
     succ = succ->Left;
@@ -211,13 +210,30 @@ ThreadTree ThreadTreeFindPred(ThreadTree T)
 }
 ThreadTree ThreadTreeFindMin(ThreadTree T)
 {
-  while(T->LeftThread == false) T = T->Left;
-
+  if(T==NULL) return NULL;
+  while(T!= NULL) T = T->Left;
   return T;
 }
 ThreadTree ThreadTreeFindMax(ThreadTree T)
 {
-  while(T->RightThread == false) T = T->Right;
-
+  if(T==NULL) return NULL;
+  while(T!= NULL) T = T->Right;
   return T;
+}
+// destory the entire double thread tree 
+ThreadTree ThreadTreeDestory(ThreadTree T)
+{
+  T = ThreadTreeFindLeftMost(T);
+  ThreadTree temp = NULL;
+
+  while(T!= NULL)
+  {
+    temp = T;
+    if(T->RightThread==true)
+      T = T->Right;
+    else
+      T = ThreadTreeFindLeftMost(T->Right);
+
+    free(temp);
+  }
 }
