@@ -20,5 +20,13 @@ struct _ThreadTreeNode{
 ThreadTree ThreadTreeFindLeftMost(ThreadTree T);
 void ThreadTreeInorder(ThreadTree T);
 ThreadTree ThreadTreeInsert(ThreadTree root,ThreadTreeDataType Data);
+ThreadTree ThreadTreeDelete(ThreadTree root,ThreadTreeDataType Data);
+ThreadTree ThreadTreeDeleteLeaf(ThreadTree root,ThreadTree parent,ThreadTree T);
+ThreadTree ThreadTreeDeleteOneChildren(ThreadTree root,ThreadTree parent,ThreadTree T);
+ThreadTree ThreadTreeDeleteTwoChildren(ThreadTree root,ThreadTree parent,ThreadTree T);
+ThreadTree ThreadTreeFindSucc(ThreadTree T);
+ThreadTree ThreadTreeFindPred(ThreadTree T);
+ThreadTree ThreadTreeFindMin(ThreadTree T);
+ThreadTree ThreadTreeFindMax(ThreadTree T);
 
 #endif
