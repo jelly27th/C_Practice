@@ -16,8 +16,12 @@ struct _kdTreeNode {
     kdTree right;
 };
 
-kdTree kdTreeInsert(kdTree root, kdTreeDataType point[],unsigned int depth);
-bool kdTreeSearch(kdTree root, kdTreeDataType point[],unsigned int depth);
-bool kdTreeFindSame(kdTreeDataType point1[],kdTreeDataType point2[]);
+static kdTree kdTreeInsertRec(kdTree root, kdTreeDataType point[],unsigned int depth);
+kdTree kdTreeInsert(kdTree root, kdTreeDataType point[]);
+static bool kdTreeSearchRec(kdTree root, kdTreeDataType point[],unsigned int depth);
+static bool kdTreeFindSame(kdTreeDataType point1[],kdTreeDataType point2[]);
+bool kdTreeSearch(kdTree root, kdTreeDataType point[]);
+static void kdTreePrintRangeRec(kdTree root, kdTreeDataType Low[], kdTreeDataType High[], unsigned int depth);
+void kdTreePrintRange(kdTree root, kdTreeDataType Low[], kdTreeDataType High[]);
 
 #endif

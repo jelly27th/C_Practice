@@ -8,7 +8,7 @@ aux_source_directory(src SRC_SUB)
 # set(SRC_CUR test/SplayTreeTest.c) # splaytree test
 # set(SRC_CUR test/BinaryTreeTest.c) # BinaryTree test
 # set(SRC_CUR test/BTreeTest.c) # avltree test
-set(SRC_CUR test/ThreadTreeTest.c) # double thread tree test
+# set(SRC_CUR test/ThreadTreeTest.c) # double thread tree test
 set(SRC_CUR test/kdTreeTest.c) # k-d tree test
 
 add_executable(test ${SRC_SUB} ${SRC_CUR})

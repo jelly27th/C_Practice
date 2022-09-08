@@ -17,13 +17,17 @@ int main(int argc, char **argv)
 
     for (int i = 0; i <sizeof(arr)/sizeof(arr[0]); i++)
     {
-        root = kdTreeInsert(root, arr[i],0);
+        root = kdTreeInsert(root, arr[i]);
     }
 
     int point1[] = {10,19};
-    printf("%d\n",kdTreeSearch(root, point1,0));
+    printf("%d\n",kdTreeSearch(root, point1));
 
     int point2[] = {12,19};
-    printf("%d\n",kdTreeSearch(root, point2,0));
+    printf("%d\n",kdTreeSearch(root, point2));
+
+    int low[] = {2,7};
+    int high[] = {10,20};
+    kdTreePrintRange(root, low, high);
     return 0;
 }
