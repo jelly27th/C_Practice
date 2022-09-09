@@ -119,3 +119,14 @@ HashTable HashDestory(HashTable H)
 	free(H);
     return NULL;
 }
+// We Assume that the output Polynomial terms has known
+// I don't test, because it's very trouble
+void HashMerge(List T, HashTable H, int Tablesize)
+{
+    HashPosition pos = Hash(H,Tablesize);
+    // we can understand T->Element is Polynomial terms
+    if(H->TheCell[pos].Info !=Empty)
+      H->TheCell[pos].Element += T->Element;
+    else
+      HashInsert(T->Element,H,Linear);
+}

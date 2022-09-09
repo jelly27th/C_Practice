@@ -1,5 +1,6 @@
 #ifndef _HASHQUAD_H
 #define _HASHQUAD_H
+#include "List.h"
 
 #define R 7
 enum KindOfEntry {
@@ -34,4 +35,5 @@ HashPosition FindLinear(HashElementType Key, HashTable H);
 HashPosition FindDoubleHash(HashElementType Key, HashTable H);
 void HashInsert(HashElementType Key, HashTable H, enum InsertOfEntry Type);
 HashTable HashDestory(HashTable H);
+void HashMerge(List T, HashTable H, int Tablesize);
 #endif
