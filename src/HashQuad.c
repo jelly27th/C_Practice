@@ -30,7 +30,7 @@ HashPosition FindSquare(HashElementType Key, HashTable H)
 {
     HashPosition CurrentPos;
     int CollisionNum = 0;
-    int count = 0;
+    // static int count = 0;
 
     CurrentPos = Hash(Key, H->Tablesize);
     while(H->TheCell[CurrentPos].Info != Empty &&
@@ -39,7 +39,7 @@ HashPosition FindSquare(HashElementType Key, HashTable H)
         CurrentPos += 2 * ++CollisionNum -1;
         if(CurrentPos>=H->Tablesize)
            CurrentPos -= H->Tablesize;
-        printf("FindSquare: %d\n", count);
+        // printf("FindSquare: %d\n", ++count);
     }
     return CurrentPos;
 }
@@ -49,7 +49,7 @@ HashPosition FindLinear(HashElementType Key, HashTable H)
 {
     HashPosition CurrentPos;
     int CollisionNum = 0;
-    int count = 0;
+    // static int count = 0;
 
     CurrentPos = Hash(Key, H->Tablesize);
     while(H->TheCell[CurrentPos].Info != Empty &&
@@ -59,7 +59,7 @@ HashPosition FindLinear(HashElementType Key, HashTable H)
         if(CurrentPos>=H->Tablesize)
            CurrentPos -= H->Tablesize;
         
-        printf("FindLinear: %d\n", count);
+        // printf("FindLinear: %d\n", ++count);
     }
     return CurrentPos; 
 }
@@ -69,16 +69,26 @@ HashPosition FindDoubleHash(HashElementType Key, HashTable H)
 {
     HashPosition CurrentPos;
     int CollisionNum = 0;
-    int count = 0;
+    // static int count = 0;
+    // int num = 0;
 
     CurrentPos = Hash(Key, H->Tablesize);
     while(H->TheCell[CurrentPos].Info != Empty &&
           H->TheCell[CurrentPos].Element != Key)
     {
-        CurrentPos = ++CollisionNum * Hash2(Key);
+        CurrentPos += ++CollisionNum * Hash2(Key);
         if(CurrentPos>=H->Tablesize)
            CurrentPos -= H->Tablesize;
-        printf("FindDoubleHash: %d",count);
+        // when you check CurrentPos>=H->Tablesize
+        // it means that key can not insert hash table
+        // num++;
+        if(CurrentPos>=H->Tablesize)
+        {
+            // count -= num;
+            // printf("FindDoubleHash: %d\n", ++count);
+            break;
+        }
+        // printf("FindDoubleHash: %d\n",++count);
     }
     return CurrentPos; 
 }
@@ -96,7 +106,7 @@ void HashInsert(HashElementType Key, HashTable H, enum InsertOfEntry Type)
     default:
         break;
     }
-    if(H->TheCell[Pos].Info != Legitmate)
+    if(H->TheCell[Pos].Info != Legitmate && Pos < H->Tablesize)
     {
         H->TheCell[Pos].Info = Legitmate;
         H->TheCell[Pos].Element = Key;
