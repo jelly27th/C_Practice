@@ -16,3 +16,11 @@ int RandInt(int lower, int upper)
   Sleep(1000);//滞后1S
   return rand() % (upper+1-lower)+lower;
 }
+
+int Str_Num(const char *str)
+{
+  unsigned int i = 0;
+  while(*str++ != '\0')
+    i++;
+  return i;
+}

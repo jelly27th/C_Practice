@@ -1,6 +1,8 @@
 #include "HashQuad.h"
+#include "Rand.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 HashTable InitHashTable(int Tablesize)
 {
@@ -23,6 +25,16 @@ HashIndex Hash(HashElementType Key, int Tablesize)
 HashIndex Hash2(HashElementType X)
 {
     return R - (X % R);
+}
+
+HashIndex HashString(const char* Key, int Tablesize)
+{
+    unsigned int HashVal = 0;
+
+    while(*Key != '\0')
+       HashVal = (HashVal << 5) + *Key++;
+    
+    return HashVal % Tablesize;
 }
 // F(i) = i*i and F(i) = F(i-1) + 2i -1 equally
 // the function is find empty cell
@@ -123,10 +135,12 @@ HashTable HashDestory(HashTable H)
 // I don't test, because it's very trouble
 void HashMerge(List T, HashTable H, int Tablesize)
 {
-    HashPosition pos = Hash(H,Tablesize);
+    // actually H->Tablesize is H->element
+    HashPosition pos = Hash(H->Tablesize,Tablesize);
     // we can understand T->Element is Polynomial terms
     if(H->TheCell[pos].Info !=Empty)
       H->TheCell[pos].Element += T->Element;
     else
       HashInsert(T->Element,H,Linear);
 }
+
