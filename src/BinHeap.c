@@ -20,22 +20,23 @@ bool BinHeapIsFull(BinHeap H)
 
 void BinHeapInsert(BinHeap H, BinHeapElementType X)
 {
-    percolateUp(H, X);
-}
-
-static void percolateUp(BinHeap H, BinHeapElementType X)
-{
     if(BinHeapIsFull(H))
     {
         printf("BinHeap if full\n");
         return ;
     }
-    
+    H->Size++;
+    int pos = percolateUp(H, X, H->Size); 
+    H->Elements[pos] = X;
+}
+
+static int percolateUp(BinHeap H, BinHeapElementType X, int Pos)
+{   
     int i;
-    for(i= ++H->Size;H->Elements[i/2]>X;i/=2)
+    for(i= Pos;H->Elements[i/2]>X;i/=2)
       H->Elements[i] = H->Elements[i/2];
     
-    H->Elements[i] = X;
+    return i;
 }
 
 bool BinHeapIsEmpty(BinHeap H)
@@ -43,26 +44,28 @@ bool BinHeapIsEmpty(BinHeap H)
     return H->Size == 0;
 }
 
-BinHeapElementType BinHeapDeleteMin(BinHeap H)
+BinHeapElementType BinHeapDeleteMin(BinHeap H, int Pos)
 {
-    return percolateDown(H);
-}
-
-static BinHeapElementType percolateDown(BinHeap H)
-{
-    int i, Child;
-    BinHeapElementType MinElement ,LastElement;
-
     if(BinHeapIsEmpty(H))
     {
         printf("BinHeap is empty\n");
         return H->Elements[0];
     }
 
-    MinElement = H->Elements[1];
-    LastElement = H->Elements[H->Size--];
+    BinHeapElementType MinElement = H->Elements[Pos];
+    BinHeapElementType LastElement = H->Elements[H->Size--];
 
-    for(i = 1; 2*i <= H->Size; i = Child)
+    int i = percolateDown(H,LastElement, Pos);
+    H->Elements[i] = LastElement;
+
+    return MinElement;
+}
+
+static int percolateDown(BinHeap H, BinHeapElementType LastElement, int Pos)
+{
+    int i, Child;
+
+    for(i = Pos; 2*i <= H->Size; i = Child)
     {
         Child = 2*i;
         if(Child != H->Size && H->Elements[Child + 1] 
@@ -74,8 +77,7 @@ static BinHeapElementType percolateDown(BinHeap H)
         else
            break;
     }
-    H->Elements[i] = LastElement;
-    return MinElement;
+    return i;
 }
 
 void BinHeapPrint(BinHeap H)
@@ -83,4 +85,64 @@ void BinHeapPrint(BinHeap H)
     for(int i = 1; i <= H->Size; i++)
        printf("%d ", H->Elements[i]);
     printf("\n");
+}
+
+BinHeapElementType BinHeapFindMin(BinHeap H)
+{
+    if(BinHeapIsEmpty)
+    {
+        printf("Heap is empty\n");
+        return H->Elements[0];
+    }
+    return H->Elements[1];
+}
+
+BinHeap BinHeapDestory(BinHeap H)
+{
+    free(H->Elements);
+    free(H);
+    return NULL;
+}
+
+int BinHeapDecraseKey(BinHeap H, int Offset, int Pos)
+{
+    int i;
+    if(Offset == NONE || Offset >= H->Elements[Pos])
+       return Pos;
+    else
+    {
+        H->Elements[Pos] -= Offset; 
+        BinHeapElementType LastElement = H->Elements[Pos];
+
+        i = percolateUp(H,LastElement,Pos);
+        if(i != Pos) H->Elements[i] = LastElement;
+    }
+    return i;
+}
+
+void BinHeapIncreaseKey(BinHeap H, int Offset, int Pos)
+{
+    H->Elements[Pos] += Offset;
+    BinHeapElementType LastElement = H->Elements[Pos];
+
+    int i = percolateDown(H, LastElement, Pos);
+    if(i != Pos) H->Elements[i] = LastElement;
+}
+
+void BinHeapDelete(BinHeap H, int Pos)
+{
+    int pos = BinHeapDecraseKey(H, NONE,Pos);
+    BinHeapDeleteMin(H, Pos);
+}
+
+void BinHeapBuildHeap(BinHeap H)
+{
+    int N = H->Size, pos = 0;
+    BinHeapElementType LastElement;
+    for(int i = N/2; i > 0; i--)
+    {
+        LastElement = H->Elements[i];
+        pos = percolateDown(H,LastElement, i);
+        if(pos != i) H->Elements[pos] = LastElement;
+    }
 }
