@@ -8,9 +8,11 @@ int main(int argc, char **argv)
 
     for(int i = 0; i <sizeof(arr)/sizeof(arr[0]); i++)
        BinHeapInsert(H,arr[i]);
+    BinHeapPrint(H);
     BinHeapDeleteMin(H);
     BinHeapDeleteMin(H);
     BinHeapDeleteMin(H);
+    BinHeapPrint(H); 
     
     return 0;
 }

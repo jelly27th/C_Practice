@@ -20,4 +20,5 @@ void BinHeapInsert(BinHeap H, BinHeapElementType X);
 static void percolateUp(BinHeap H, BinHeapElementType X);
 BinHeapElementType BinHeapDeleteMin(BinHeap H);
 static BinHeapElementType percolateDown(BinHeap H);
+void BinHeapPrint(BinHeap H);
 #endif

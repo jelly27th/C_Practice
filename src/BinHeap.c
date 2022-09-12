@@ -1,5 +1,6 @@
 #include "BinHeap.h"
 #include <stdio.h>
+#include <stdlib.h>
 BinHeap BinHeapInit(int MaxSize)
 {
     BinHeap H = malloc(sizeof(Binheap));
@@ -75,4 +76,11 @@ static BinHeapElementType percolateDown(BinHeap H)
     }
     H->Elements[i] = LastElement;
     return MinElement;
+}
+
+void BinHeapPrint(BinHeap H)
+{
+    for(int i = 1; i <= H->Size; i++)
+       printf("%d ", H->Elements[i]);
+    printf("\n");
 }
