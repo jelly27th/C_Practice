@@ -58,15 +58,34 @@ void DisjSet_Union_Height(DisjSet S,SetType Root1,SetType Root2)
         S[Root2] = Root1;
     }
 }
-
+// just find the root node of x, do nothing
 SetType DisjSet_Find(DisjSet_ElementType X,DisjSet S)
 {
     if(S[X]<=0) return X;
     else return DisjSet_Find(S[X],S);
 }
 
+// find the root of x and 
+// The parent node of each node passed from x becomes the root node
 SetType DisjSet_Find_Path(DisjSet_ElementType X,DisjSet S)
 {
     if(S[X]<=0) return X;
     else return S[X]=DisjSet_Find_Path(S[X],S);
+}
+
+// find the root of x and 
+// Every node from x to the root points to its grandparent
+// note: I haven't actually tested this function
+SetType DisjSet_Find_Path_Halving(DisjSet_ElementType X,DisjSet S)
+{
+    while(S[X]>0&&S[S[X]]>0)
+    {
+        S[X] = S[S[X]];
+        X = S[X];
+    }
+
+    if(S[X]>0) //if S[X] is the child of the root
+      X = S[X];
+    
+    return X;
 }

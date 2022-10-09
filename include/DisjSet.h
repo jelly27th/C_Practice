@@ -13,5 +13,6 @@ void DisjSet_Union_Size(DisjSet S,SetType Root1,SetType Root2);
 void DisjSet_Union_Height(DisjSet S,SetType Root1,SetType Root2);
 SetType DisjSet_Find(DisjSet_ElementType X,DisjSet S);
 SetType DisjSet_Find_Path(DisjSet_ElementType X,DisjSet S);
+SetType DisjSet_Find_Path_Halving(DisjSet_ElementType X,DisjSet S);
 
 #endif
