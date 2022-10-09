@@ -12,11 +12,23 @@
 #include <stdio.h>
 #include "BinomialHeap.h"
 
+static int Bino_Sum()
+{
+    int sum = 1;
+    int num = 2;
+    for(int i = 0; i < BinomialHeapMax; i++)
+    {
+        num *= 2;
+        sum += num;
+    }
+    return sum;
+}
+
 BinomialHeap 
 BinomialHeap_CombineTrees(BinomialHeap T1, BinomialHeap T2)
 {
     if(T1->element>T2->element)
-      return CombineTrees(T2,T1);
+      return BinomialHeap_CombineTrees(T2,T1);
     T2->NextSibling = T1->LeftChild;
     T1->LeftChild = T2;
     return T1;
@@ -150,14 +162,3 @@ void BinomialHeapQueue_Insert(BinomialHeapQueue H, BinomialHeap_ElementType Elem
     BinomialHeapQueue_Merge(H, single);
 }
 
-static int Bino_Sum()
-{
-    int sum = 1;
-    int num = 2;
-    for(int i = 0; i < BinomialHeapMax; i++)
-    {
-        num *= 2;
-        sum += num;
-    }
-    return sum;
-}

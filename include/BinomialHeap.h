@@ -26,5 +26,6 @@ BinomialHeapQueue BinomialHeapQueue_Merge(BinomialHeapQueue H1, BinomialHeapQueu
 BinomialHeap_ElementType BinomialHeapQueue_DeleteMin(BinomialHeapQueue H);
 bool BinomialHeapQueue_IS_Empty(BinomialHeapQueue H);
 void BinomialHeapQueue_Insert(BinomialHeapQueue H, BinomialHeap_ElementType Element);
+static int Bino_Sum();
 
 #endif

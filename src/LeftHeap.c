@@ -12,6 +12,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+static void SWapChildren(Leftheap H)
+{
+    Leftheap temp = H->Left;
+    H->Left = H->Right;
+    H->Right = temp;
+}
+
 Leftheap Leftheap_Init(Leftheap_element_type element)
 {
     Leftheap H = malloc(sizeof(LeftHeapNode));
@@ -56,13 +63,6 @@ static Leftheap Leftheap_Merge1(Leftheap H1, Leftheap H2)
         H1->NPL = H1->Right->NPL + 1;
     }
     return H1;
-}
-
-static void SWapChildren(Leftheap H)
-{
-    Leftheap temp = H->Left;
-    H->Left = H->Right;
-    H->Right = temp;
 }
 
 Leftheap Leftheap_Insert1(Leftheap_element_type X, Leftheap H)

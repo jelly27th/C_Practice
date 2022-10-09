@@ -104,14 +104,11 @@ void MergeSort(int A[],int N)
 
   if(TmpArray!=NULL)
   {
-    Msort(A,TmpArray,0,N-1);
+    MSort(A,TmpArray,0,N-1);
     free(TmpArray);
   }
   else
-  {
     printf("No Space for tmp array!!!\n");
-    return 0;
-  }
 }
 // Lpos = start of left half,Ppos = start of right half
 static void 
@@ -305,7 +302,7 @@ void ShellSort_Knuth(int A[],int N)
   free(Increment);
 }
 // generate Gonnet incremental sequence and fixed quantity is 10
-static int* Gonnet(N)
+static int* Gonnet(int N)
 {
   int* H = malloc(Increment_len*sizeof(int));
 
@@ -321,7 +318,7 @@ static int* Gonnet(N)
   return H;
 }
 // Use Gonnet incremental sequence to sort
-void ShellSort_Knuth(int A[],int N)
+void ShellSort_Gonnet(int A[],int N)
 {
   int tmp;
   int i,j;

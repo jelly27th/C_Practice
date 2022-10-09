@@ -13,5 +13,6 @@ struct _SkewHeapNode{
 
 SkewHeap SkewHeap_Init(SkewHeap_ElementType element);
 SkewHeap SkewHeap_Merge(SkewHeap H1, SkewHeap H2);
+static void Swap(SkewHeap H1, SkewHeap H2);
 
 #endif

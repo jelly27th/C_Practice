@@ -20,5 +20,7 @@ Leftheap Leftheap_Merge(Leftheap H1, Leftheap H2);
 Leftheap Leftheap_Insert1(Leftheap_element_type X, Leftheap H);
 #define Leftheap_DeleteMin(H) (H = Leftheap_DeleteMin1((H)));
 Leftheap Leftheap_DeleteMin1(Leftheap H);
+static Leftheap Leftheap_Merge1(Leftheap H1, Leftheap H2);
+static void SWapChildren(Leftheap H);
 
 #endif

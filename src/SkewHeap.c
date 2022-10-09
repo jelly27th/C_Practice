@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2022
  * 
  */
-#include <SkewHeap.h>
+#include "SkewHeap.h"
 #include <stdlib.h>
 
 SkewHeap SkewHeap_Init(SkewHeap_ElementType element)
