@@ -19,12 +19,15 @@
 */
 void Topological_Sort(Graph G)
 {
-    //Create an array of in-degrees for each vertex
-    // and statistics
-    // Note: if your camke project build in VS, you should
-    // use int indegree[10] replace int indegree[G->Vertex_Num]
-    // otherwise it will fail build
-    int indegree[G->Vertex_Num];
+    /*
+    * Create an array of in-degrees for each vertex
+    * and statistics
+    * Note: if your camke project build in VS, you should
+    * use int indegree[10] replace int indegree[G->Vertex_Num]
+    * otherwise it will fail build
+    */
+    int indegree[10];
+    // int indegree[G->Vertex_Num];
     FindIndegree(G, indegree);
     
     // Init stack
