@@ -2,6 +2,7 @@
 #define _BINHEAP_H
 #include <stdbool.h>
 
+// default data type is int
 typedef int BinHeapElementType;
 typedef struct _Binheap Binheap;
 typedef Binheap * BinHeap;

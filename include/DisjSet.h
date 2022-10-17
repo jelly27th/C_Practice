@@ -2,8 +2,10 @@
 #define _DISJSET_H
 
 #define NumSets (17)
+// default data type for DisjSet[NumSets+1]
 typedef int DisjSet[NumSets+1];
 typedef int SetType;
+// default data type for DisjSet_ElementType
 typedef int DisjSet_ElementType;
 
 void DisjSet_Init_0(DisjSet S);
