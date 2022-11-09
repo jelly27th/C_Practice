@@ -31,8 +31,14 @@ static Stack Stack_Init();
 static bool Stack_IsEmpty(Stack S);
 static void Push(Stack S, vertex_type vertex);
 static vertex_type Pop(Stack S);
-static void FindIndegree(Graph G, int indegree[]);
+static vertex_type Top(Stack S);
+static void FindIndegree(Graph G, int indegree[]);  
 Graph CreateAOV();
 void Graph_Delete(Graph G);
+
+#define NIL (-1)
+void Tarjan1(Graph G, int u, int DFN[], int LOW[],Stack S, bool stack[]);
+void Tarjan(Graph G);
+#define MIN(a,b) (a < b ? a : b)
 
 #endif

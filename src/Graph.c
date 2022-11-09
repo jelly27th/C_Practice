@@ -125,7 +125,7 @@ Graph CreateAOV()
     printf("Please input vertex number and arc number,such as (2,1)\n");
     scanf("%d,%d", &G->Vertex_Num,&G->Arc_Num);
 
-    printf("Please input %d vertex\n", G->Vertex_Num); 
+    printf("Please input %d vertex,such as 1 2 3...\n", G->Vertex_Num); 
     for(int i = 0; i < G->Vertex_Num;i++)
     {
         scanf("%d",&G->Vertices[i].Data);
@@ -149,4 +149,65 @@ Graph CreateAOV()
 void Graph_Delete(Graph G)
 {
     free(G);
+}
+
+void Tarjan1(Graph G, int u, int DFN[], int LOW[], Stack S, bool stack[])
+{
+    static int index = 0;
+
+    DFN[u] = LOW[u] = ++index;
+    Push(S,u);
+    stack[u] = true;
+
+    int v;
+    for(Arc_Node arc = G->Vertices[u].First_Adj;  arc != NULL; arc = arc->Arc_Next)
+    {
+        v = arc->Adj_Index;
+        if(DFN[v] == NIL)
+        {
+            Tarjan1(G, v, DFN, LOW, S, stack);
+            LOW[u] = MIN(LOW[u], LOW[v]); 
+        }
+        else if(stack[v] == true)
+          LOW[u] = MIN(LOW[u], DFN[v]);
+    }
+
+    if(DFN[u]==LOW[u])
+    {
+        int w = NIL;
+        do{
+            w = Pop(S);
+            stack[w] = false;
+            printf("%d ", G->Vertices[w].Data);
+        }while(w != u);
+        printf("\n");
+    }
+}
+
+void Tarjan(Graph G)
+{
+    /* 
+    * Note: if your camke project build in VS, you should
+    * use int n = 6 replace int n = G->Vertex_Num
+    * otherwise it will fail build
+    */
+    int n = G->Vertex_Num;
+    int DFN[n],LOW[n];
+    bool stack[n];
+    Stack S = Stack_Init();
+
+    for(int i = 0; i < n; i++)
+    {
+        DFN[i] = LOW[i] = NIL;
+        stack[i] = false;
+    }
+
+    for(int i = 0; i < n; i++)
+      if(DFN[i] == NIL) 
+        Tarjan1(G, i, DFN, LOW, S, stack);
+}
+
+static vertex_type Top(Stack S)
+{
+    return S->Data;
 }

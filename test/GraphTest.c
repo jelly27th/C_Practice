@@ -13,7 +13,8 @@
 int main(int argc, char **argv)
 {
     Graph G = CreateAOV();
-    Topological_Sort(G);
+    // Topological_Sort(G);
+    Tarjan(G);
     Graph_Delete(G);
     return 0;
 }
