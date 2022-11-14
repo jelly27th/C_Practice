@@ -14,7 +14,9 @@ int main(int argc, char **argv)
 {
     Graph G = CreateAOV();
     // Topological_Sort(G);
-    Tarjan(G);
+    // Tarjan(G);
+    print(G);
+    Find_EulerCircuit(G);
     Graph_Delete(G);
     return 0;
 }

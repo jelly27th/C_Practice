@@ -126,16 +126,14 @@ Graph CreateAOV()
     scanf("%d,%d", &G->Vertex_Num,&G->Arc_Num);
 
     printf("Please input %d vertex,such as 1 2 3...\n", G->Vertex_Num); 
-    for(int i = 0; i < G->Vertex_Num;i++)
-    {
+    for (int i = 0; i < G->Vertex_Num;i++) {
         scanf("%d",&G->Vertices[i].Data);
         G->Vertices[i].First_Adj = NULL;
     }
 
     printf("Please input %d arc,such as (1,2)\n", G->Arc_Num);
     vertex_type start, end;
-    for(int i = 0, locate; i < G->Arc_Num; i++)
-    {
+    for (int i = 0, locate; i < G->Arc_Num; i++) {
         scanf("%d,%d",&start,&end);
         Arc_Node P = malloc(sizeof(_Arc_Node));
         P->Adj_Index = Locate_Vertex(G,end);
@@ -146,13 +144,11 @@ Graph CreateAOV()
     return G;
 }
 
-void Graph_Delete(Graph G)
-{
+void Graph_Delete(Graph G){
     free(G);
 }
 
-void Tarjan1(Graph G, int u, int DFN[], int LOW[], Stack S, bool stack[])
-{
+void Tarjan1(Graph G, int u, int DFN[], int LOW[], Stack S, bool stack[]){
     static int index = 0;
 
     DFN[u] = LOW[u] = ++index;
@@ -160,54 +156,125 @@ void Tarjan1(Graph G, int u, int DFN[], int LOW[], Stack S, bool stack[])
     stack[u] = true;
 
     int v;
-    for(Arc_Node arc = G->Vertices[u].First_Adj;  arc != NULL; arc = arc->Arc_Next)
-    {
+    for (Arc_Node arc = G->Vertices[u].First_Adj;  
+               arc != NULL; arc = arc->Arc_Next) {
         v = arc->Adj_Index;
-        if(DFN[v] == NIL)
-        {
+        if (DFN[v] == NIL) {
             Tarjan1(G, v, DFN, LOW, S, stack);
             LOW[u] = MIN(LOW[u], LOW[v]); 
         }
-        else if(stack[v] == true)
+        else if (stack[v] == true)
           LOW[u] = MIN(LOW[u], DFN[v]);
     }
 
-    if(DFN[u]==LOW[u])
-    {
+    if (DFN[u]==LOW[u]) {
         int w = NIL;
-        do{
+        do {
             w = Pop(S);
             stack[w] = false;
             printf("%d ", G->Vertices[w].Data);
-        }while(w != u);
+        } while(w != u);
         printf("\n");
     }
 }
 
-void Tarjan(Graph G)
-{
+void Tarjan(Graph G) {
     /* 
     * Note: if your camke project build in VS, you should
     * use int n = 6 replace int n = G->Vertex_Num
     * otherwise it will fail build
     */
     int n = G->Vertex_Num;
-    int DFN[n],LOW[n];
-    bool stack[n];
+    // int DFN[n],LOW[n];
+    // bool stack[n];
+    int DFN[6],LOW[6];
+    bool stack[6];
     Stack S = Stack_Init();
 
-    for(int i = 0; i < n; i++)
-    {
+    for (int i = 0; i < n; i++) {
         DFN[i] = LOW[i] = NIL;
         stack[i] = false;
     }
 
-    for(int i = 0; i < n; i++)
-      if(DFN[i] == NIL) 
+    for (int i = 0; i < n; i++)
+      if (DFN[i] == NIL) 
         Tarjan1(G, i, DFN, LOW, S, stack);
 }
 
-static vertex_type Top(Stack S)
-{
+static vertex_type Top(Stack S) {
     return S->Data;
+}
+
+// This function only works for undirected graphs
+void Find_EulerCircuit(Graph G) {
+    int index = IS_EulerGraph(G);
+    Stack S = Stack_Init();
+
+    if (index == 0) {
+        printf("The graph is Euler Graph\n");
+        Hierholzer(G, 0, S);
+    }
+    else if (index == 2) {
+        printf("The graph is Semi Euler Graph\n");
+        Hierholzer(G, 0, S);
+    }
+    else
+       printf("The graph is not Euler Graph\n");
+
+    while (!Stack_IsEmpty(S)) {
+        printf("%d ",Pop(S));
+    }
+}
+
+/*
+*  odd = 0 means Euler graph 
+*  odd = 2 means semi Euler graph
+*  odd != 0 && odd != 1 means not Euler graph
+*/
+static int IS_EulerGraph(Graph G) {
+    int indegree[G->Vertex_Num];
+    // int indegree[10];
+    static int odd = 0;
+    FindIndegree(G, indegree);
+    for (int i = 0; i < G->Vertex_Num; i++) {
+        if (indegree[i]%2!=0) odd++;
+    }
+    return odd;
+}
+
+static void Hierholzer(Graph G, int u, Stack S) {
+    int v;
+    for (Arc_Node arc = G->Vertices[u].First_Adj;  
+                   arc != NULL; arc = arc->Arc_Next) {
+        if (arc->Adj_Index != NIL) {
+            v = arc->Adj_Index;
+            Delete_Edge(G, u, v);
+            Delete_Edge(G, v, u);
+            Hierholzer(G, v, S);
+        }
+    }
+    Push(S, G->Vertices[u].Data);
+}
+
+static void Delete_Edge(Graph G, int u, int v) {  
+    for (Arc_Node arc = G->Vertices[u].First_Adj; 
+              arc != NULL; arc = arc->Arc_Next) {
+        if (arc->Adj_Index == v) {
+            arc->Adj_Index = NIL;
+            break;
+        }
+    }
+}
+
+void print(Graph G) {
+    Arc_Node pos;
+    for (int i = 0; i< G->Vertex_Num; i++) {
+        printf("index = %d, edge = ", G->Vertices[i].Data);
+        pos = G->Vertices[i].First_Adj;
+        while (pos != NULL) {
+            printf("%d ", G->Vertices[pos->Adj_Index].Data);
+            pos = pos->Arc_Next;
+        }
+        printf("\n");
+    }
 }

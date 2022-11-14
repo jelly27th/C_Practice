@@ -41,4 +41,16 @@ void Tarjan1(Graph G, int u, int DFN[], int LOW[],Stack S, bool stack[]);
 void Tarjan(Graph G);
 #define MIN(a,b) (a < b ? a : b)
 
+/*
+* The function of this function is to find 
+* Euler Circuit and Euler Tour .
+* But I only wrote the template and 
+* didn't test the actual function .
+*/
+void Find_EulerCircuit(Graph G);
+static int IS_EulerGraph(Graph G);
+static void Hierholzer(Graph G,int index, Stack S);
+static void Delete_Edge(Graph G, int u, int v);
+void print(Graph G);
+
 #endif
