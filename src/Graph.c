@@ -232,8 +232,9 @@ void Find_EulerCircuit(Graph G) {
 *  odd != 0 && odd != 1 means not Euler graph
 */
 static int IS_EulerGraph(Graph G) {
-    int indegree[G->Vertex_Num];
-    // int indegree[10];
+    // if you need to build in VS2022, you should use int indegree[10];
+    // int indegree[G->Vertex_Num];
+    int indegree[10];
     static int odd = 0;
     FindIndegree(G, indegree);
     for (int i = 0; i < G->Vertex_Num; i++) {
