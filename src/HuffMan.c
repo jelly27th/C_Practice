@@ -18,12 +18,12 @@ void printfPercent(int per) {
 * The compressed file format is as follows
 * FileLength|compressnumber|compresscode|leafnumber|character|length|bits
 * FileLength: The total number of characters in the original file.
-* compressnumber: 压缩文件总字符个数（不含编码信息）
-* compresscode: 压缩文件编码
-* leafnumber: 霍夫曼树编码树叶个数
-* character: 霍夫曼编码表示的字符
-* length: 霍夫曼字符编码的长度
-* bits: 八位霍夫曼字符编码信息
+* compressnumber: The total number of characters in the compressed file (excluding encoding information)
+* compresscode: The encoded content of the compressed file
+* leafnumber: Huffman tree encoding the number of leaves
+* character: Characters represented by Huffman encoding
+* length: Length of Huffman character encoding
+* bits: Eight-bit Huffman character encoding information
 */
 int Compress(const char *inputfile,const char *outputfile) {
     FILE* ifp = fopen(inputfile,"rb");
@@ -174,6 +174,8 @@ int File_Compress(HuffManTree T, FILE *ifp, FILE *ofp, long Len) {
 
         len = strlen(buf);
         c = 0;
+        // Convert Huffman encoding into a bit stream.
+        // (actually a Huffman encoding a single char to store a bit)
         while (len >= 8) {
             for (i = 0; i < 8; i++) {
                 if (buf[i] == '1') c = (c << 1) | 1;
@@ -303,7 +305,8 @@ int HuffManCode_Generate(HuffManCode T, FILE *ifp) {
             tmp = c;
             _itoa(tmp, buf, 2);
             tmp = strlen(buf);
-            for (int k = 8; k > tmp; k--)
+            //Insufficient number of digits, perform zero-fill operation
+            for (int k = 8; k > tmp; k--) 
                 strcat(T->Set[i].bits, "0");
             strcat(T->Set[i].bits, buf);
         }
@@ -321,7 +324,8 @@ void File_UnCompress(HuffManCode T, FILE *ifp, FILE *ofp, int Len) {
 
     fseek(ifp, 8, SEEK_SET);
     bx[0] = 0;
-    while (CurPer != Len) {
+    // Read compressed files and convert
+    while (CurPer != Len) { 
         while (strlen(bx) < len) {
             fread(&c, 1, 1, ifp);
             tmp = c;

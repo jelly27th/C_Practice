@@ -20,7 +20,8 @@ aux_source_directory(src SRC_SUB)
 # set(SRC_CUR test/GraphTest.c) # Graph test
 # set(SRC_CUR test/TableTest.c) # Table test
 # set(SRC_CUR test/EdgeTest.c) # Edge test
-set(SRC_CUR test/HuffManTest.c) # HuffMan test
+# set(SRC_CUR test/HuffManTest.c) # HuffMan test
+set(SRC_CUR test/BinPackingTest.c) # Bin Packing Problem test
 
 add_executable(test ${SRC_SUB} ${SRC_CUR})
 include_directories(include)
