@@ -46,7 +46,7 @@ int FirstFit(double A[], int N, double Capacity) {
 // printf() can be changed to array linked list storage. 
 int BestFit(double A[], int N, double Capacity) {
     int res = 0;
-    double bin_rem[N], min;
+    double bin_rem[10], min; // N = 10
     int j, bi;
 
     for (int i = 0; i < N; i++) {
@@ -75,7 +75,7 @@ int BestFit(double A[], int N, double Capacity) {
 // printf() can be changed to array linked list storage. 
 int WorstFit(double A[], int N, double Capacity) {
     int res = 0;
-    double bin_rem[N], max;
+    double bin_rem[10], max; // N = 10
     int wi, j;
 
     for (int i = 0; i < N; i++) {
