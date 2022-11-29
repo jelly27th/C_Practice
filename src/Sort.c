@@ -161,6 +161,23 @@ static int Median3(int A[],int Left,int Right)
   return A[Right-1];//return pivot
 }
 
+static int Median5(int A[],int Left,int Right) {
+  int N = sizeof(A)/sizeof(A[0]);
+  int tmp[N][5], count = 0;
+  for (int i = 0; i < N; i++) {
+    for (int j = 0; j < N; j++) {
+      tmp[i][j] = A[count++];
+    }
+  }
+
+  int M[5];
+  for (int i = 0; i < N; i++) {
+    M[i] = Median3(tmp[i], 0, 4);
+  }
+
+  return Median3(M, 0, 4);
+}
+
 #define Cutoff (3)
 static void Qsort(int A[], int Left, int Right)
 {
@@ -198,6 +215,7 @@ void QSelect(int A[],int k,int Left,int Right)
   if(Left+Cutoff<=Right)
   {
     Pivot = Median3(A,Left,Right);
+    // Pivot = Median5(A,Left,Right);
     i = Left;j = Right-1;
     for(;;)
     {

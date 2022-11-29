@@ -15,6 +15,7 @@ static void Swap(int* A,int* B);
 static void MSort(int A[],int TmpArray[],int Left,int Right);
 static void Merge(int A[],int TmpArray[],int Lpos,int Rpos,int RightEnd);
 static int Median3(int A[],int Left,int Right);
+static int Median5(int A[],int Left,int Right);
 static void Qsort(int A[], int Left, int Right);
 static int* Hibbard();
 static int* Knuth();
