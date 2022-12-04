@@ -115,3 +115,48 @@ double MinDistance(Point T, int N) {
     }
     return min;
 }
+
+/*
+* Compute optimal ordering of matrix multiplication.
+* C contains number of columns for each of the N matrices.
+* C[0] is the number of rows in matrix 1.
+* Minimum number of multiplications is left in M[1][N].
+* Actual ordering is computed via.
+* another procedure using LastChange.
+* M and LastChange are indexed starting at 1, instead of 0.
+* Note: Entries below main diagonals of M and LastChange are
+* meaningless and uninitialised.
+*/
+void OptMatrix(const long C[], int N, long M[][MaxSize], long LastChange[][MaxSize]) {
+    long ThisM;
+
+    for (int Left = 1; Left <= N; Left++) {
+        M[Left][Left] = 0;
+    }
+    for (int K = 1; K < N; K++) {
+        for (int Left = 1; Left <= N -K ; Left++) {
+            // for each position    
+            int Right = Left + K;
+            M[Left][Right] = Infinity;
+            for (int i = Left; i < Right; i++) {
+                ThisM = M[Left][i] + M[i + 1][Right]
+                        + C[Left - 1] * C[i] * C[Right];
+                if (ThisM < M[Left][Right]) {
+                    // update min
+                    M[Left][Right] = ThisM;
+                    LastChange[Left][Right] = i;
+                } 
+            }
+        }
+    }
+}
+
+// Print matrix multiplication optimal path
+void Traceback(int i,int j,long LastChange[][MaxSize])
+{
+	if(i==j) return;
+	Traceback(i,LastChange[i][j],LastChange);
+	Traceback(LastChange[i][j]+1,j,LastChange);
+    printf("Multiply A%d,%ld", i,LastChange[i][j]);
+    printf(" and A%ld,%d\n",  LastChange[i][j]+1, j);
+}

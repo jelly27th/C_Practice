@@ -22,4 +22,9 @@ void Point_Delete(Point T);
 void Point_Print(Point T, int N);
 double MinDistance(Point T, int N);
 
+#define Infinity (2147483647)
+#define MaxSize (5)
+void OptMatrix(const long C[], int N, long M[][MaxSize], long LastChange[][MaxSize]);
+void Traceback(int i, int j, long LastChange[][MaxSize]);
+
 #endif
