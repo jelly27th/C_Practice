@@ -161,8 +161,8 @@ static int Median3(int A[],int Left,int Right)
   return A[Right-1];//return pivot
 }
 
-static int Median5(int A[],int Left,int Right) {
-  int N = sizeof(A)/sizeof(A[0]);
+static int Median5(int A[], int Left,int Right) {
+  int N = Right - Left + 1;
   // int tmp[N][5], count = 0;
   int tmp[10][5], count = 0;
   for (int i = 0; i < N; i++) {

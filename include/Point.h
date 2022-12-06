@@ -26,5 +26,7 @@ double MinDistance(Point T, int N);
 #define MaxSize (5)
 void OptMatrix(const long C[], int N, long M[][MaxSize], long LastChange[][MaxSize]);
 void Traceback(int i, int j, long LastChange[][MaxSize]);
+static void PrintPath1(int Path[][MaxSize], int S, int T);
+void PrintPath(int Path[][MaxSize], int S, int T);
 
 #endif

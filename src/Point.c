@@ -160,3 +160,21 @@ void Traceback(int i,int j,long LastChange[][MaxSize])
     printf("Multiply A%d,%ld", i,LastChange[i][j]);
     printf(" and A%ld,%d\n",  LastChange[i][j]+1, j);
 }
+
+// Print the path between S and T, except do not print
+// the first or last vertex. Print a trailing slash "to" only.
+static void PrintPath1(int Path[][MaxSize], int S, int T) {
+    int StopOver = Path[S][T];
+    if (S != T && StopOver != 0) {
+        PrintPath1(Path, S, StopOver);
+        printf("%d to",StopOver);
+        PrintPath1(Path, StopOver, T);
+    }
+}
+
+//Assume the existence of a Path of length at least 1 
+void PrintPath(int Path[][MaxSize], int S, int T) {
+    printf("%d to",S);
+    PrintPath1(Path, S, T);
+    printf("%d\n",T);
+}
