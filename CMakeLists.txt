@@ -16,7 +16,7 @@ aux_source_directory(src SRC_SUB)
 # set(SRC_CUR test/kdTreeTest.c) # k-d tree test
 # set(SRC_CUR test/HashQuadTest.c) # HashQuad test
 # set(SRC_CUR test/BinHeapTest.c) # Binary heap test
-# set(SRC_CUR test/DisjSetTest.c) # DisjSet test
+# set(SRC_CUR test/DisjSetTest.c) # DisjSet test 
 # set(SRC_CUR test/GraphTest.c) # Graph test
 # set(SRC_CUR test/TableTest.c) # Table test
 # set(SRC_CUR test/EdgeTest.c) # Edge test
@@ -26,7 +26,8 @@ aux_source_directory(src SRC_SUB)
 # set(SRC_CUR test/SkiplistTest.c) # Skiplist test
 # set(SRC_CUR test/BacktrackTest.c) # Backtrack Problem Test
 # set(SRC_CUR test/fibonacci_heapTest.c) # Fibonacci heap test
-set(SRC_CUR test/RBtreeTest.c) # RedBlackTree test 
+# set(SRC_CUR test/RBtreeTest.c) # RedBlackTree test 
+set(SRC_CUR test/_123_SkiplistTest.c) # 1-2-3 Skiplist test
 
 add_executable(test ${SRC_SUB} ${SRC_CUR})
 include_directories(include)
