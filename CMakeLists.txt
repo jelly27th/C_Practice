@@ -27,7 +27,8 @@ aux_source_directory(src SRC_SUB)
 # set(SRC_CUR test/BacktrackTest.c) # Backtrack Problem Test
 # set(SRC_CUR test/fibonacci_heapTest.c) # Fibonacci heap test
 # set(SRC_CUR test/RBtreeTest.c) # RedBlackTree test 
-set(SRC_CUR test/_123_SkiplistTest.c) # 1-2-3 Skiplist test
+# set(SRC_CUR test/_123_SkiplistTest.c) # 1-2-3 Skiplist test
+set(SRC_CUR test/AAtreeTest.c) # AAtree test
 
 add_executable(test ${SRC_SUB} ${SRC_CUR})
 include_directories(include)
