@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "fibonacci_heap.h"
+#include "FibonacciHeap.h"
 
 #define DEBUG 0
 
@@ -32,7 +32,7 @@ void test_basic()
 {
     int i;
     int blen=LENGTH(b);
-    FibHeap *hb = fib_heap_make();
+    FibHeap hb = fib_heap_make();
 
     // 斐波那契堆hb
     printf("== 斐波那契堆(hb)中依次添加: ");
@@ -54,7 +54,7 @@ void test_insert()
 {
     int i;
     int alen=LENGTH(a);
-    FibHeap *ha = fib_heap_make();
+    FibHeap ha = fib_heap_make();
 
     // 斐波那契堆ha
     printf("== 斐波那契堆(ha)中依次添加: ");
@@ -83,8 +83,8 @@ void test_union()
     int i;
     int alen=LENGTH(a);
     int blen=LENGTH(b);
-    FibHeap *ha = fib_heap_make();
-    FibHeap *hb = fib_heap_make();
+    FibHeap ha = fib_heap_make();
+    FibHeap hb = fib_heap_make();
 
     // 斐波那契堆ha
     printf("== 斐波那契堆(ha)中依次添加: ");
@@ -126,8 +126,8 @@ void test_remove_min()
     int i;
     int alen=LENGTH(a);
     int blen=LENGTH(b);
-    FibHeap *ha = fib_heap_make();
-    FibHeap *hb = fib_heap_make();
+    FibHeap ha = fib_heap_make();
+    FibHeap hb = fib_heap_make();
 
     // 斐波那契堆ha
     printf("== 斐波那契堆(ha)中依次添加: ");
@@ -172,7 +172,7 @@ void test_decrease()
 {
     int i;
     int blen=LENGTH(b);
-    FibHeap *hb = fib_heap_make();
+    FibHeap hb = fib_heap_make();
 
     // 斐波那契堆hb
     printf("== 斐波那契堆(hb)中依次添加: ");
@@ -198,7 +198,7 @@ void test_increase()
 {
     int i;
     int blen=LENGTH(b);
-    FibHeap *hb = fib_heap_make();
+    FibHeap hb = fib_heap_make();
 
     // 斐波那契堆hb
     printf("== 斐波那契堆(hb)中依次添加: ");
@@ -224,7 +224,7 @@ void test_delete()
 {
     int i;
     int blen=LENGTH(b);
-    FibHeap *hb = fib_heap_make();
+    FibHeap hb = fib_heap_make();
 
     // 斐波那契堆hb
     printf("== 斐波那契堆(hb)中依次添加: ");

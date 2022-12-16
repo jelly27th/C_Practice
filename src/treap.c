@@ -1,6 +1,7 @@
 #include "treap.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 /*
 *     X --> R --> G                      R
@@ -38,6 +39,8 @@ Treap Treap_Init() {
         NullNode->Left = NullNode->Right = NullNode;
         NullNode->Priority = Infinity;
     }
+    // Reset time, set seed
+    srand(time(0));
     return NullNode;
 }
 
