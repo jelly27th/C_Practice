@@ -1,3 +1,13 @@
+/**
+ * @file MainElement.c
+ * @author Jelly (wugd827@163.com)
+ * @brief 摩尔投票
+ * @version 0.1
+ * @date 2023-01-02
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 #include<stdio.h>
 
 int MainElement(int*arr,int len);

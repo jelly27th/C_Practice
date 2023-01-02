@@ -1,3 +1,13 @@
+/**
+ * @file MaxSubsequenceSum.c
+ * @author Jelly (wugd827@163.com)
+ * @brief 求最大子序列和
+ * @version 0.1
+ * @date 2023-01-02
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 #include <stdio.h>
 #include <math.h>
 //求最大子序列和

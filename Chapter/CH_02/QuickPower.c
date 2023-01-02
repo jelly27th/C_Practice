@@ -1,3 +1,13 @@
+/**
+ * @file QuickPower .c
+ * @author Jelly (wugd827@163.com)
+ * @brief 常规取幂和非递归取幂
+ * @version 0.1
+ * @date 2023-01-02
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 #include <stdio.h>
 int power(int base, int freq);
 double Pow(double x, int n);

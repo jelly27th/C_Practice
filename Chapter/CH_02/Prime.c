@@ -1,3 +1,14 @@
+/**
+ * @file Prime.c
+ * @author Jelly (wugd827@163.com)
+ * @brief 判断是否是素数
+ * @version 0.1
+ * @date 2023-01-02
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include <stdio.h>
 int isPrime(unsigned int N);
 int main(int argc, char **argv)
