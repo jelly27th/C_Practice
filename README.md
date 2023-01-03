@@ -16,13 +16,11 @@
   - [第十一章](#第十一章)
   - [第十二章](#第十二章)
 - [参考](#参考)
-- [感想](#感想)
 
 # 简述
 数据结构与算法分析(C语言描述)习题练习,是传说中的黑皮书。
-几乎大部分习题都做了，但是很难的和一些经典问题没有做，比如第十章中的N皇后问题之类,书中也只是在习题提了一嘴罢了。
-证明可以去看我的博客[Jelly27th's Blog](https://www.dong27th.cn/)，说实话，我写完之后连我自己都不相信自己的证明。
 
+几乎大部分习题都做了，但是很难的和一些经典问题没有做，比如第十章中的N皇后问题之类,书中也只是在习题提了一嘴罢了。
 # 完成进度
 - [x] 第一章
 - [x] 第二章
@@ -160,6 +158,3 @@
 1. [YinWenAtBIT/Data-Structure](https://github.com/YinWenAtBIT/Data-Structure)
 2. [erkekin/Kruskal](https://github.com/YinWenAtBIT/Data-Structure)
 3. [参考文章总集](https://www.dong27th.cn/2022/12/17/CandCpp/DataStructureandAlgorithmAnalysis/postscript/)
-
-# 感想
-[戳这里](https://www.dong27th.cn/2022/12/17/CandCpp/DataStructureandAlgorithmAnalysis/postscript/)
